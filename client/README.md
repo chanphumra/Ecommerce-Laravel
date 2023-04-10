@@ -1,4 +1,4 @@
-# flutter_commerce
+# client
 
 A new Flutter project.
 

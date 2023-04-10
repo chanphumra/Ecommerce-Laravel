@@ -1,6 +1,6 @@
 {
-    "name": "flutter_commerce",
-    "short_name": "flutter_commerce",
+    "name": "client",
+    "short_name": "client",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

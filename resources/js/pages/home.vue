@@ -1,3 +1,3 @@
 <template>
-    <h1>Hellos</h1>
+    <div>Home</div>
 </template>

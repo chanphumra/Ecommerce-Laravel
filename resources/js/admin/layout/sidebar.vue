@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 const props = defineProps(['openSide']);
+const emit = defineEmits(['closeSide']);
 
 /*=========== get route name ===========*/
 const routeName = computed(() => {
@@ -126,6 +127,12 @@ function icons(icon) {
     return "/icons/" + icon;
 };
 
+function closeSidebar () {
+    if(props.openSide){
+        emit('closeSide', false);
+    }
+}
+
 </script>
 
 <template>
@@ -148,7 +155,7 @@ function icons(icon) {
                 <div class="" v-if="open[index]">
                     <div v-for="sub in item.children">
                         <RouterLink :to="'/admin/' + sub.page_name">
-                            <div class="py-[6px] px-4 pr-1 cursor-pointer rounded-md lg:hover:bg-hover_menu">
+                            <div class="py-[6px] px-4 pr-1 cursor-pointer rounded-md lg:hover:bg-hover_menu" @click="closeSidebar">
                                 <p :class="routeName == sub.page_name ? 'text-primary' : ''"
                                     class="text-ph font-semibold pl-12">{{ sub.title }}</p>
                             </div>

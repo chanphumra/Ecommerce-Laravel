@@ -7,6 +7,8 @@ import home from "../pages/home.vue";
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
 import dashboard from '../admin/pages/dashboard.vue';
+import addcategory from '../admin/pages/addcategory.vue';
+import category from '../admin/pages/category.vue';
 
 const routes = [
     {
@@ -30,9 +32,14 @@ const routes = [
                 name: 'dashboard'
             },
             {
-                path : '/admin/add_customer',
-                component : dashboard, 
-                name: 'add_customer'
+                path : '/admin/add_category',
+                component : addcategory, 
+                name: 'add_category'
+            },
+            {
+                path : '/admin/show_category',
+                component : category, 
+                name: 'show_category'
             }
         ]
     },

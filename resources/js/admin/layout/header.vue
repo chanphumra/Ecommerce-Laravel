@@ -2,6 +2,10 @@
     import { ref } from 'vue';
     import Sidebar from './sidebar.vue';
     let open = ref(false);
+
+    function handle(value) {
+        open.value = value;
+    }
 </script>
 
 <template>
@@ -22,5 +26,5 @@
             <img src="" alt="" class='w-10 h-10 rounded-full object-cover cursor-pointer' />
         </div>
     </div>
-    <Sidebar :openSide="open"/>
+    <Sidebar :openSide="open" @close-side="handle(value)"/>
 </template>

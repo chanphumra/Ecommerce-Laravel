@@ -10,10 +10,10 @@ module.exports = {
     extend: {
       colors: {
         body: "#F5F7FA", 
-        primary: "#42D392",
+        primary: "#42b883",
         hover_menu: "#EFF2F6",
         black_500: "#141824",
-        current: '#42D392',
+        current: '#42b883',
         last: '#82ca9d',
         view: '#D9FBD0',
         head: "#2b3445",

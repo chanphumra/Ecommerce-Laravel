@@ -1,4 +1,5 @@
 <script setup>
+import { assertExpressionStatement } from '@babel/types';
 import { ref } from 'vue';
     let form = ref({
         name: '',
@@ -7,29 +8,22 @@ import { ref } from 'vue';
     });
 
     function previewImage() {
-        let image = '';
-        if(form.value.image){
-            if(form.value.image.indexOf('base64') != -1){
-                image = form.value.image;
-            }
-            else{
-                image = "/uploads/" + form.value.image;
-            }
-        }
-        return image;
+        return URL.createObjectURL(form.value.image);
     }
 
     function browseImage(e) {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        const limit = 1024 * 1024 * 2;
-        if(file['size'] > limit){
-            return false;
-        }
-        reader.onloadend = (file) => {
-            form.value.image = reader.result;
-        }
-        reader.readAsDataURL(file);
+        form.value.image = file;
+        console.log(form.value.image);
+    }
+
+    function saveCategory(){
+        const formData = new FormData();
+        formData.append('name', form.value.name);
+        formData.append('description', form.value.description);
+        formData.append('image', form.value.image);
+
+        axios.post("/api/category/", formData).then(res => {}).catch(err => {console.log(err);});
     }
 </script>
 
@@ -37,7 +31,7 @@ import { ref } from 'vue';
     <div class='lg:py-7 lg:px-10 p-5'>
         <div class="flex justify-between items-end">
             <h1 class='text-3xl font-bold text-black_500'>Add a category</h1>
-            <button class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Publish category</button>
+            <button class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer' @click="saveCategory()">Publish category</button>
         </div>
         <div class="mt-10 flex flex-col gap-8 md:flex-row">
             <div class='flex-[4]'>

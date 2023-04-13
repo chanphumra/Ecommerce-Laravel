@@ -57,7 +57,7 @@ function updateCategory() {
                 icon: 'animated heartBeat delay-1s'
             },
             icon: 'success',
-            text: 'Category has been saved',
+            text: 'Category has been updated',
             showConfirmButton: false,
             timer: 1000
         }).then(r => {

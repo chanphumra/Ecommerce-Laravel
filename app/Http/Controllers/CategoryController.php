@@ -119,7 +119,7 @@ class CategoryController extends Controller
         if ($category) {
             /*======= delete image ======*/
             if (file_exists(substr($category->image, 1))) unlink(substr($category->image, 1));
-            
+
             /*======= delete database ======*/
             $category->delete();
             return response()->json([

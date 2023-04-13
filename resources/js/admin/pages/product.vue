@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const header = ['PRODUCT NAME', 'PRICE', 'IN STOCK', 'DISCOUNT', 'CATEGORY', 'PUBLISHED ON'];
-const ITEM_PER_PAGE = 5;
+const ITEM_PER_PAGE = 1;
 let page = ref(0);
 let activePage = ref(1);
 
@@ -40,40 +40,27 @@ const deleteProduct = (id) => {
         confirmButtonColor: '#42b883',
         cancelButtonColor: '#d33',
         reverseButtons: true
-    }).then((result) => {
+    }).then(async (result) => {
         if (result.isConfirmed) {
-            alert();
-            // axios.delete('ajax/product.php?action=delete&p_id=' + id).then(res => {
-            //     const data = res.data;
-            //     console.log(res);
-            //     if (res.data.success) {
-            //         Swal.fire({
-            //             toast: true,
-            //             position: 'top',
-            //             showClass: {
-            //                 icon: 'animated heartBeat delay-1s'
-            //             },
-            //             icon: 'success',
-            //             text: 'One product has been deleted',
-            //             showConfirmButton: false,
-            //             timer: 1000
-            //         }).then(res => {
-            //             window.location.href = "index.php?page_name=products";
-            //         })
-            //     } else {
-            //         Swal.fire({
-            //             toast: true,
-            //             position: 'top',
-            //             showClass: {
-            //                 icon: 'animated heartBeat delay-1s'
-            //             },
-            //             icon: 'error',
-            //             text: 'Something wrong!',
-            //             showConfirmButton: false,
-            //             timer: 1000
-            //         })
-            //     }
-            // });
+            axios.delete("/api/product/" + id).then(res => {
+                if (res.status == 200) {
+                    getProduct();
+                    if ((products.length - 1) % ITEM_PER_PAGE == 0) {
+                        activePage = activePage - 1;
+                    }
+                    Swal.fire({
+                        toast: true,
+                        position: 'top',
+                        showClass: {
+                            icon: 'animated heartBeat delay-1s'
+                        },
+                        icon: 'success',
+                        text: 'Product has been delete!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                }
+            });
         }
     })
 }
@@ -148,10 +135,12 @@ function Image(image) {
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('check.svg')" alt="" class="w-[14px] h-[14px]">
                             </div>
-                            <div
-                                class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
-                                <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
-                            </div>
+                            <RouterLink :to="'/admin/edit_product/' + item.id">
+                                <div
+                                    class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
+                                    <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
+                                </div>
+                            </RouterLink>
                             <div @click="deleteProduct(item.id)"
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('trash.svg')" alt="" class="w-[14px] h-[14px]">

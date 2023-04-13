@@ -97,7 +97,46 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        if($product){
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->sale_price = $request->sale_price;
+            $product->qty = $request->qty;
+            $product->discount = $request->discount;
+
+            if ($request->hasFile('image1') && $request->hasFile('image2') && $request->hasFile('image3')) {
+
+                /*========== delete old image ==========*/
+                if (file_exists(substr($product->image1, 1))) unlink(substr($product->image1, 1));
+                if (file_exists(substr($product->image2, 1))) unlink(substr($product->image2, 1));
+                if (file_exists(substr($product->image3, 1))) unlink(substr($product->image3, 1));
+                
+                /*========== update database ==========*/
+                $imageArray = [$request->file('image1'), $request->file('image2'), $request->file('image3')];
+                for ($index = 0; $index < count($imageArray); $index++) {
+                    $file = $imageArray[$index];
+                    $extention = strtolower($file->getClientOriginalExtension());
+                    $image_name = time() . rand() . "." . $extention;
+                    $uploads_path = "uploads/product/";
+                    $image_url = "/" . $uploads_path . $image_name;
+                    $file->move($uploads_path, $image_name);
+                    if ($index == 0) $product->image1 = $image_url;
+                    if ($index == 1) $product->image2 = $image_url;
+                    if ($index == 2) $product->image3 = $image_url;
+                }
+            }
+
+            $product->save();
+            return response()->json([
+                "success" => true
+            ], 200);
+
+        }
+        return response()->json([
+            "message" => "product not found"
+        ], 400);
     }
 
     /**
@@ -105,6 +144,21 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            /*======= delete image ======*/
+            if (file_exists(substr($product->image1, 1))) unlink(substr($product->image1, 1));
+            if (file_exists(substr($product->image2, 1))) unlink(substr($product->image2, 1));
+            if (file_exists(substr($product->image3, 1))) unlink(substr($product->image3, 1));
+
+            /*======= delete database ======*/
+            $product->delete();
+            return response()->json([
+                "success" => true
+            ], 200);
+        }
+        return response()->json([
+            "message" => "product not found"
+        ], 400);
     }
 }

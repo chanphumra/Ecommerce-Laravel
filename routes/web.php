@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/{notFound}', function () {
+Route::get('/{pathMatch}', function () {
     return view('app');
-})->where('notFound', ".*");
+})->where('pathMatch', ".*");

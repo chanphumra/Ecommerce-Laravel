@@ -7,7 +7,10 @@ const emit = defineEmits(['closeSide']);
 
 /*=========== get route name ===========*/
 const routeName = computed(() => {
-    return useRoute().name;
+    let name = useRoute().name;
+    if(name == "edit_category") name = "show_category";
+    if(name == "edit_product") name = "show_product";
+    return name;
 });
 
 /*=========== init menu ===========*/
@@ -165,7 +168,7 @@ function closeSidebar () {
             </div>
             <div v-else>
                 <RouterLink :to="'/admin/' + (item.page_name == 'dashboard' ?'' : item.page_name)">
-                    <div class='flex items-center py-[6px] px-4 rounded-md lg:hover:bg-hover_menu'>
+                    <div class='flex items-center py-[6px] px-4 rounded-md lg:hover:bg-hover_menu' @click="closeSidebar">
                         <h1 class='mr-2'><img class="w-4 h-4" :src="icons(item.icon)" alt=""></h1>
                         <p :class="routeName == item.page_name ? 'text-primary' : ''" class=" text-ph font-semibold">{{
                             item.title

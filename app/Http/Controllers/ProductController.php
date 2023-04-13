@@ -12,7 +12,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::with('category')->get();
+        return response()->json([
+            "result" => $product
+        ], 200);
     }
 
     /**
@@ -67,7 +70,18 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $product->category;
+            return response()->json([
+                "result" => $product
+            ], 200);
+        }
+        else{
+            return response()->json([
+                "message" => "product not found"
+            ], 400);
+        }
     }
 
     /**

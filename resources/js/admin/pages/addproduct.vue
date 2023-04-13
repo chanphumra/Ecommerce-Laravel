@@ -89,7 +89,7 @@ const saveProduct = () => {
             showConfirmButton: false,
             timer: 1000
         }).then(r => {
-            router.push('/admin/show_category');
+            router.push('/admin/show_product');
         });
     }).catch(err => {
         console.log(err);
@@ -170,7 +170,7 @@ const saveProduct = () => {
                             </p>
                         </RouterLink>
                     </div>
-                    <select name="" id="" class="w-full mt-2 text-[14px] cursor-pointer" v-model="form.c_id">
+                    <select name="" id="" class="w-full mt-4 text-[14px] cursor-pointer" v-model="form.c_id">
                         <option v-for="item in categories" :value="item.id">{{ item.name }}</option>
                     </select>
                 </div>

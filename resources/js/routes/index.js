@@ -9,7 +9,9 @@ import admin from '../admin/pages/admin.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
 import category from '../admin/pages/category.vue';
+import editcategory from '../admin/pages/editcategory.vue';
 import addproduct from '../admin/pages/addproduct.vue';
+import product from '../admin/pages/product.vue';
 
 const routes = [
     {
@@ -43,9 +45,19 @@ const routes = [
                 name: 'show_category'
             },
             {
+                path : '/admin/edit_category/:id',
+                component : editcategory, 
+                name: 'edit_category'
+            },
+            {
                 path : '/admin/add_product',
                 component : addproduct, 
                 name: 'add_product'
+            },
+            {
+                path : '/admin/show_product',
+                component : product, 
+                name: 'show_product'
             },
         ]
     },

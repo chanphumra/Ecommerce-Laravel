@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('price');
             $table->double('sale_price');
             $table->integer('qty');
-            $table->double('dicount')->default(0.0);
+            $table->double('discount')->default(0.0);
             $table->string('image1');
             $table->string('image2');
             $table->string('image3');

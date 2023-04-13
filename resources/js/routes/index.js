@@ -9,6 +9,7 @@ import admin from '../admin/pages/admin.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
 import category from '../admin/pages/category.vue';
+import addproduct from '../admin/pages/addproduct.vue';
 
 const routes = [
     {
@@ -40,7 +41,12 @@ const routes = [
                 path : '/admin/show_category',
                 component : category, 
                 name: 'show_category'
-            }
+            },
+            {
+                path : '/admin/add_product',
+                component : addproduct, 
+                name: 'add_product'
+            },
         ]
     },
     {

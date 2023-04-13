@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Nette\Utils\Image;
 
 class CategoryController extends Controller
 {
@@ -13,7 +12,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::all();
+        return response()->json([
+            "result" => $category
+        ], 200);
     }
 
     /**
@@ -43,6 +45,11 @@ class CategoryController extends Controller
             $category->image = $image_url;
         }
         $category->save();
+        
+        return response()->json([
+            "success" => true,
+            "insert_id" => $category->id
+        ], 200);
     }
 
     /**
@@ -51,7 +58,9 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::find($id);
-        return response(['data' => $category]);
+        return response()->json([
+            "result" => $category
+        ], 200);
     }
 
     /**

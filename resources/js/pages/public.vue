@@ -1,5 +1,9 @@
+<script setup>
+import Header from '../layout/header.vue';
+</script>
+
 <template>
-    <div>header</div>
+    <Header />
     <RouterView></RouterView>
     <div>footer</div>
 </template>

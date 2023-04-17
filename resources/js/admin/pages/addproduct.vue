@@ -11,7 +11,7 @@ let form = ref({
     price: '',
     sale_price: '',
     qty: '',
-    discount: '',
+    discount: 0,
     image: []
 });
 let categories = ref([]);
@@ -41,7 +41,7 @@ function browseImage(e) {
 }
 
 const saveProduct = () => {
-    if (form.value.name == '' || form.value.description == "" || form.value.price == "" || form.value.sale_price == "" || form.value.qty == "" || form.value.c_id == "") return Swal.fire({
+    if (form.value.name == '' || form.value.description == "" || form.value.price == "" || form.value.sale_price == "" || form.value.qty == "" || form.value.discount == "" ||  form.value.c_id == "") return Swal.fire({
         toast: true,
         position: 'top',
         showClass: {

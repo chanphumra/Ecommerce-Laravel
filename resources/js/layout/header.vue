@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import navbar from './navbar.vue';
+import { RouterLink } from 'vue-router';
 
 let countCart = ref(0);
 setInterval(() => {
@@ -33,12 +34,14 @@ setInterval(() => {
             </div>
 
             <div class="flex items-center">
-                <div class="relative mr-3 cursor-pointer">
-                    <i
-                        class='fa-solid fa-cart-shopping w-10 h-10 md:w-[46px] md:h-[46px] bg-[#f3f5f9] rounded-full text-center leading-10 md:leading-[46px]'></i>
-                    <span
-                        class='absolute -top-1 right-0  w-4 h-4 md:w-5 md:h-5 leading-4 md:leading-5 rounded-full text-center bg-primary text-[13px] text-white'>{{countCart}}</span>
-                </div>
+                <RouterLink :to="'/cart'">
+                    <div class="relative mr-3 cursor-pointer">
+                        <i
+                            class='fa-solid fa-cart-shopping w-10 h-10 md:w-[46px] md:h-[46px] bg-[#f3f5f9] rounded-full text-center leading-10 md:leading-[46px]'></i>
+                        <span
+                            class='absolute -top-1 right-0  w-4 h-4 md:w-5 md:h-5 leading-4 md:leading-5 rounded-full text-center bg-primary text-[13px] text-white'>{{ countCart }}</span>
+                    </div>
+                </RouterLink>
                 <i
                     class='fa fa-user w-10 h-10 md:w-[46px] md:h-[46px] bg-[#f3f5f9] rounded-full text-center leading-10 md:leading-[46px] cursor-pointer'></i>
 

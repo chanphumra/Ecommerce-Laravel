@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 let more = ref(false);
 let openId = ref(0);
@@ -17,7 +18,7 @@ onMounted(async () => {
 
 const getProduct = async () => {
     const respone = await axios.get('/api/product');
-    products.value = respone.data.result;
+    products.value = respone.data.result.reverse();
 }
 
 function addToCart(item) {
@@ -68,7 +69,7 @@ function Image(image) {
     <div class="mt-10">
         <div class="flex justify-between items-end">
             <div class="flex items-center">
-                <img src="" alt="" class='w-8 h-8 mr-1' />
+                <img :src="'/icons/newarrivals.png'" alt="" class='w-8 h-8 mr-1' />
                 <span class='text-2xl font-[700] text-gray-800 capitalize'>New Arrivals</span>
             </div>
             <p @click="more = !more" class="text-sm hover:underline cursor-pointer text-primary">{{ more ? 'See less' :
@@ -81,10 +82,9 @@ function Image(image) {
                         class="bg-primary absolute top-4 left-3 text-white rounded-[10px] text-[0.65rem] px-2 p-1">{{
                             item.discount }}%Off</span>
                     <div class="">
-                        <!-- <Link to='/productdetails?page_name=productdetails' state={{ item: item }}>
-                                                    <img src={item.image1} alt='' class='w-full h-[300px] object-cover mt-1' />
-                                                    </Link> -->
-                        <img :src="Image(item.image1)" alt='' class='w-full h-[300px] object-cover mt-1' />
+                        <RouterLink :to="'/productdetail/' + item.id">
+                            <img :src="Image(item.image1)" alt='' class='w-full h-[300px] object-cover mt-1' />
+                        </RouterLink>
                         <div
                             class="absolute top-0 right-0 opacity-0 transition duration-100 m-2 group-hover:opacity-100 flex justify-center items-center flex-col text-gray-400">
                             <i @click="openId = item.id"
@@ -99,7 +99,8 @@ function Image(image) {
                             <div class="flex items-center gap-2 text-sm">
                                 <h4 class='text-primary text-base font-semibold'>${{ item.sale_price - (item.sale_price
                                     * item.discount / 100) }}</h4>
-                                <h4 class='text-gray-500 del line-through'>${{ item.sale_price }}</h4>
+                                <h4 v-if="item.discount > 0" class='text-gray-500 del line-through'>${{ item.sale_price }}
+                                </h4>
                             </div>
                             <button type='button'
                                 class='text w-[30px] p-[2px] border border-solid border-primary rounded  cursor-pointer transition duration-500 hover:bg-gray-50'>
@@ -125,12 +126,12 @@ function Image(image) {
 
                             <p class='text-gray-500 text-sm my-3 border-b border-solid border-gray-300 pb-5'>
                                 {{ item.description }}</p>
-                            <button class='capitalize text-white bg-primary py-2
-                                            rounded shadow-[0px_4px_16px_rgb(43,52,69,0.10)]'>Add to cart</button>
+                            <button @click="addToCart(item)"
+                                class='capitalize text-white bg-primary py-2 rounded shadow-[0px_4px_16px_rgb(43,52,69,0.10)]'>Add
+                                to cart</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</template>
+</div></template>

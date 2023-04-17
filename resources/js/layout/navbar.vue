@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 const routerName = computed(() => {
     return useRoute().name;
@@ -82,7 +82,9 @@ let openMenu = ref(false);
                 class="flex flex-col lg:flex-row gap-[20px] right-[5%] top-[112%] absolute lg:static items-start lg:items-end justify-end rounded-lg overflow-hidden bg-white" 
                 :class="openMenu ? 'p-5 pr-[100px] lg:p-0': 'h-0 p-0 lg:h-auto'"
             >
-                <p v-for="item in menu" :class="item.page_name == routerName? 'text-primary': ''" class="cursor-pointer text-base font-semibold text-gray-700">{{ item.title }}</p>
+            <RouterLink v-for="item in menu" :to="item.page_name == 'home' ? '/' : '/' + item.page_name">
+                <p :class="item.page_name == routerName? 'text-primary': ''" class="cursor-pointer text-base font-semibold text-gray-700">{{ item.title }}</p>
+            </RouterLink>
             </div>
             <button @click="() => {openMenu = !openMenu; openCategory = false;}">
                 <i class="fa-solid fa-bars text-base lg:hidden"></i>

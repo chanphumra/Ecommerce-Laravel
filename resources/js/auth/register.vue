@@ -204,8 +204,7 @@ async function nextStep() {
                             class="w-full text-white bg-primary focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">Next</button>
                         <p class="text-sm font-normal text-gray-500">
                             Already have an account?
-                            <span class="font-medium text-primary hover:underline"> Sign in here
-                            </span>
+                            <RouterLink to='/login' class="font-medium text-primary hover:underline ml-1">Sign in here</RouterLink>
                         </p>
                     </div>
                 </div>
@@ -242,8 +241,7 @@ async function nextStep() {
                             an account</button>
                         <p class="text-sm font-normal text-gray-500">
                             Already have an account?
-                            <span class="font-medium text-primary hover:underline"> Sign in here
-                            </span>
+                            <RouterLink to='/login' class="font-medium text-primary hover:underline ml-1">Sign in here</RouterLink>
                         </p>
                     </div>
                 </div>

@@ -1,8 +1,16 @@
 <script setup>
 import { onMounted, onUpdated, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
+const router = useRouter();
 let counter = ref(60);
+
+let form = ref({
+    num1: '',
+    num2: '',
+    num3: '',
+    num4: ''
+});
 
 onMounted(() => {
     let interval = setInterval(() => {
@@ -28,6 +36,7 @@ onMounted(() => {
 
 function Resend() {
     counter.value = 60;
+    form.value.num1 = form.value.num2 = form.value.num3 = form.value.num4 = "";
     const otp = Math.floor(Math.random() * 9000 + 1000);
 
     const formData = new FormData();
@@ -103,6 +112,20 @@ function Resend() {
 }
 
 function Verify() {
+
+    if (form.value.num1 == "" || form.value.num2 == "" || form.value.num3 == "" || form.value.num4 == "") return Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'warning',
+        text: "Please complete your otp",
+        showConfirmButton: false,
+        timer: 1000
+    });
+    let otp = form.value.num1 + form.value.num2 + form.value.num3 + form.value.num4;
+
     const formData = new FormData();
     formData.append("email", route.params.email);
     formData.append("otp", otp);
@@ -115,27 +138,25 @@ function Verify() {
                 showClass: {
                     icon: 'animated heartBeat delay-1s'
                 },
-                icon: 'true',
-                text: "Your account verify",
+                icon: 'success',
+                text: res.data.message,
                 showConfirmButton: false,
                 timer: 1000
             }).then(res => {
-
+                router.push("/login");
             });
         }
-        else{
+        else {
             Swal.fire({
                 toast: true,
                 position: 'top',
                 showClass: {
                     icon: 'animated heartBeat delay-1s'
                 },
-                icon: 'true',
-                text: "Your account verify",
+                icon: 'warning',
+                text: res.data.message,
                 showConfirmButton: false,
                 timer: 1000
-            }).then(res => {
-                
             });
         }
     }).catch(err => { console.log(err); });
@@ -161,22 +182,22 @@ function Verify() {
                         <div class="flex flex-col space-y-16">
                             <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                                 <div class="w-16 h-16 ">
-                                    <input ref={num1} maxLength={1}
+                                    <input v-model="form.num1" maxLength="1"
                                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none input text-xl"
                                         type="text" name="" id="" />
                                 </div>
                                 <div class="w-16 h-16 ">
-                                    <input ref={num2} maxLength={1}
+                                    <input v-model="form.num2" maxLength="1"
                                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none input text-xl"
                                         type="text" name="" id="" />
                                 </div>
                                 <div class="w-16 h-16 ">
-                                    <input ref={num3} maxLength={1}
+                                    <input v-model="form.num3" maxLength="1"
                                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none input text-xl"
                                         type="text" name="" id="" />
                                 </div>
                                 <div class="w-16 h-16 ">
-                                    <input ref={num4} maxLength={1}
+                                    <input v-model="form.num4" maxlength="1"
                                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none input text-xl"
                                         type="text" name="" id="" />
                                 </div>
@@ -184,7 +205,7 @@ function Verify() {
 
                             <div class="flex flex-col space-y-5">
                                 <div>
-                                    <button
+                                    <button @click="Verify()"
                                         class="flex flex-row items-center justify-center text-center w-full border rounded-lg outline-none py-3 bg-primary border-none text-white text-base shadow-sm">
                                         Verify Account
                                     </button>

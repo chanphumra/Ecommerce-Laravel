@@ -9,6 +9,7 @@ import productdetail from "../pages/productdetail.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
 import clientRegister from "../auth/register.vue";
+import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
@@ -98,6 +99,11 @@ const routes = [
         path: '/register',
         component: clientRegister,
         name: 'clientRegister'
+    },
+    {
+        path: '/login',
+        component: clientLogin,
+        name: 'clientLogin'
     },
     {
         path: '/verify/:email',

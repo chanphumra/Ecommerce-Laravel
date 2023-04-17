@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $image = "";
 
         if ($request->hasFile('image')) {
@@ -34,15 +35,19 @@ class AuthController extends Controller
         return response()->json(['message' => 'Register Successfully']);
     }
 
-    public function login(Request $request){    
+    public function login(Request $request)
+    {
         $TOKEN_KEY = "051ecc732fcae9f5976a4549814f0db2199a244e4c70aef949090f237c8e24bd7648f4304296263a7811a3f5332fbdeb716fbee5e88af042843ff09704323308";
-       
-        $user = User::where('email', $request->email)->first();
-        if (!$user || ! Hash::check($request->password, $user->password)) {
+
+        $user = User::where([
+            ['email', $request->email],
+            ['role', $request->role]
+        ])->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'success' => false, 
-                'message' => 'Incorrect email or password', 
-            ],200);
+                'success' => false,
+                'message' => 'Incorrect email or password',
+            ], 200);
         }
 
         $token = $user->createToken($TOKEN_KEY)->plainTextToken;
@@ -50,26 +55,28 @@ class AuthController extends Controller
             "success" => true,
             "user" => $user,
             "token" => $token
-        ],200);
+        ], 200);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logout Successfull']);
     }
 
-    public function exist(Request $request){
+    public function exist(Request $request)
+    {
         $user = User::where('email', $request->email)->get()->first();
-        if($user) return response()->json(["exist" => true],200);
-        return response()->json(["exist" => false],200);
+        if ($user) return response()->json(["exist" => true], 200);
+        return response()->json(["exist" => false], 200);
     }
 
     public function verify(Request $request)
     {
         $email = EmailOTP::where('email', $request->email)->get()->first();
-        if($email && $email->otp == $request->otp){
+        if ($email && $email->otp == $request->otp) {
             $user = User::where('email', $request->email)->first();
-            if($user) {
+            if ($user) {
                 $user->verify = 1;
                 $user->save();
                 $email->delete();
@@ -82,6 +89,6 @@ class AuthController extends Controller
         return response()->json([
             'success' => false,
             "message" => "Incorrect OTP"
-        ],200);
+        ], 200);
     }
 }

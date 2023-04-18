@@ -28,10 +28,14 @@ function login() {
     formData.append('role', 0);
     axios.post('/api/auth/login', formData).then(res => {
         if (res.data.success) {
-            if(form.value.remember)
+            if(form.value.remember){
                 localStorage.setItem("token", res.data.token);
-            else
+                sessionStorage.removeItem("token");
+            }
+            else{
                 sessionStorage.setItem("token", res.data.token);
+                localStorage.removeItem("token");
+            }
             Swal.fire({
                 toast: true,
                 position: 'top',

@@ -176,9 +176,11 @@ router.beforeEach((to, from, next) => {
     /*========== userAuth ==========*/
     else{
         if(to.meta.userAuth && !sessionStorage.getItem('token') && !localStorage.getItem('token')){
+            sessionStorage.removeItem("adminToken");
             next('/login');
         }
         else{
+            sessionStorage.removeItem("adminToken");
             next();
         }
     }

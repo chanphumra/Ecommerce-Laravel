@@ -5,7 +5,9 @@ import notFound from "../components/notFound.vue";
 import client from "../pages/public.vue";
 import home from "../pages/home.vue";
 import cart from "../pages/cart.vue";
+import products from "../pages/product.vue";
 import productdetail from "../pages/productdetail.vue";
+import productcategory from "../pages/productcategory.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
 import clientRegister from "../auth/register.vue";
@@ -38,9 +40,19 @@ const routes = [
                 name: 'cart'
             },
             {
+                path : '/product',
+                component : products, 
+                name: 'product'
+            },
+            {
                 path : '/productdetail/:id',
                 component : productdetail, 
                 name: 'productdetail'
+            },
+            {
+                path : '/productcategory/:id',
+                component : productcategory, 
+                name: 'productcategory'
             },
             {
                 path : '/shippinginfo',

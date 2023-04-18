@@ -3,7 +3,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
 let route = useRoute();
-let data = JSON.parse(route.query.data);
+let data = JSON.parse(route.query.data) || [];
 let cart = reactive(JSON.parse(localStorage.getItem('carts')) || { products: [], subtotal: 0, discount_price: 0, total: 0 });
 
 let paypal = ref();
@@ -23,7 +23,6 @@ const loadPaypal = () => {
                 return actions.order.create({
                     purchase_units: [
                         {
-                            description: "hello",
                             amount: {
                                 currency_code: "USD",
                                 value: cart.total

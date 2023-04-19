@@ -41,6 +41,32 @@ const loadPaypal = () => {
         })
         .render(paypal.value);
 }
+
+function sendMessageTelegram(order_id) {
+        const TELEGRAM_BOT_TOKEN = "6147139821:AAFIk9fp-ePPaE9oAhYLXpRnTRsL8_khPIk";
+        const TELEGRAM_GROUP_ID = "-996407006";
+
+        let text = `<b>Summary Order #${order_id}</b>` + '\n\n';
+        for (let index = 0; index < cart.products.length; index++) {
+            const product = cart.products[index];
+            text += (index + 1) + ". " + product.name + "      x" + product.qty + "      $" + product.sale_price + "\n";
+        }
+        text += "-----------------------------------------" + "\n";
+        text += "subtotal:              $" + cart.subtotal + "\n";
+        text += "discount:             $" + cart.discount_price.toFixed(2) + "\n";
+        text += "total:                     $" + cart.total + "\n";
+        const data = {
+            chat_id: TELEGRAM_GROUP_ID,
+            parse_mode: "HTML",
+            text: text
+        };
+        axios.post(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, data).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
 </script>
 
 <template>

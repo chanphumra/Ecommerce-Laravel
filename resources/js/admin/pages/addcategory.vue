@@ -1,8 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+let token = ref('');
+
+onMounted(() => {
+    token.value = sessionStorage.getItem('adminToken') || '';
+});
 
 let form = ref({
     name: '',
@@ -51,7 +56,12 @@ function saveCategory() {
     formData.append('description', form.value.description);
     formData.append('image', form.value.image);
 
-    axios.post("/api/category/", formData).then(res => {
+    axios.post("/api/category/", formData, {
+        headers: {
+            'Authorization': `Bearer ${token.value}`,
+            'Accept': 'application/json'
+        }
+    }).then(res => {
         Swal.fire({
             toast: true,
             position: 'top',

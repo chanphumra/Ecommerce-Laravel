@@ -4,6 +4,7 @@ import { RouterLink, useRouter } from 'vue-router';
 
 const router = useRouter();
 
+let token = ref('');
 let form = ref({
     c_id: '',
     name: '',
@@ -17,7 +18,8 @@ let form = ref({
 let categories = ref([]);
 
 onMounted(async () => {
-    getCategory()
+    getCategory();
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 const getCategory = async () => {
@@ -77,7 +79,12 @@ const saveProduct = () => {
     formData.append('image2', form.value.image[1]);
     formData.append('image3', form.value.image[2]);
 
-    axios.post('/api/product', formData).then(res => {
+    axios.post('/api/product', formData, {
+        headers: {
+            'Authorization': `Bearer ${token.value}`,
+            'Accept': 'application/json'
+        }
+    }).then(res => {
         Swal.fire({ 
             toast: true,
             position: 'top',

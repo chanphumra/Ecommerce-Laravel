@@ -22,6 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    Route::post('/category', [CategoryController::class, 'store']);
+    Route::put('/category/{category}', [CategoryController::class, 'update']);
+    Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
+
+    Route::post('/product', [ProductController::class, 'store']);
+    Route::put('/product/{product}', [ProductController::class, 'update']);
+    Route::delete('/product/{product}', [ProductController::class, 'destroy']);
+});
+
 /*
 |--------------------------------------------------------------------------
 | AUth API Routes
@@ -47,11 +57,13 @@ Route::delete('/deleteOTP/{email}', [MailController::class, 'deleteOTP']);
 | Category API Routes
 |--------------------------------------------------------------------------
 */
-Route::apiResource('/category', CategoryController::class);
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/category/{category}', [CategoryController::class, 'show']);
 
 /*
 |--------------------------------------------------------------------------
 | Product API Routes
 |--------------------------------------------------------------------------
 */
-Route::apiResource('/product', ProductController::class);
+Route::get('/product', [ProductController::class, 'index']);
+Route::get('/product/{product}', [ProductController::class, 'show']);

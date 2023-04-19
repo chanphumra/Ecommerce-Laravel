@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_otp', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('otp');
+            $table->bigInteger('o_id')->unsigned();
+            $table->bigInteger('p_id')->unsigned();
+            $table->integer('qty');
+            $table->foreign('o_id')->references('id')->on('product')->onDelete('cascade');
+            $table->foreign('p_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_otp');
+        Schema::dropIfExists('order_details');
     }
 };

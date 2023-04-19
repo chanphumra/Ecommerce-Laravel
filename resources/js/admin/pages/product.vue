@@ -7,11 +7,12 @@ const header = ['PRODUCT NAME', 'PRICE', 'IN STOCK', 'DISCOUNT', 'CATEGORY', 'PU
 const ITEM_PER_PAGE = 1;
 let page = ref(0);
 let activePage = ref(1);
-
 let products = ref([]);
+let token = ref('');
 
 onMounted(async () => {
     getProduct();
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 let productByPage = computed(() => {
@@ -42,7 +43,12 @@ const deleteProduct = (id) => {
         reverseButtons: true
     }).then(async (result) => {
         if (result.isConfirmed) {
-            axios.delete("/api/product/" + id).then(res => {
+            axios.delete("/api/product/" + id, {
+                headers: {
+                    'Authorization': `Bearer ${token.value}`,
+                    'Accept': 'application/json'
+                }
+            }).then(res => {
                 if (res.status == 200) {
                     getProduct();
                     if ((products.length - 1) % ITEM_PER_PAGE == 0) {

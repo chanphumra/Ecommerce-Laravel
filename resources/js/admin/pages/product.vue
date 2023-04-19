@@ -51,7 +51,7 @@ const deleteProduct = (id) => {
             }).then(res => {
                 if (res.status == 200) {
                     getProduct();
-                    if ((products.length - 1) % ITEM_PER_PAGE == 0) {
+                    if ((products.value.length - 1) % ITEM_PER_PAGE == 0) {
                         activePage = activePage - 1;
                     }
                     Swal.fire({

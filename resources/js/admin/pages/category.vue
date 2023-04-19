@@ -66,7 +66,7 @@ const deleteCategory = (id) => {
             }).then(res => {
                 if (res.status == 200) {
                     getCategory();
-                    if ((categories.length - 1) % ITEM_PER_PAGE == 0) {
+                    if ((categories.value.length - 1) % ITEM_PER_PAGE == 0) {
                         activePage = activePage - 1;
                     }
                     Swal.fire({

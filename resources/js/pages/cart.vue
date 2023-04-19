@@ -1,9 +1,8 @@
 <script setup>
 import { reactive } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
-
-
+const router = useRouter();
 const header = ['PRODUCTS', 'PRICE', 'QUANTITY', 'TOTAL'];
 let cart = reactive(JSON.parse(localStorage.getItem('carts')) || { products: [], subtotal: 0, discount_price: 0, total: 0 });
 
@@ -58,6 +57,23 @@ function remove(index) {
             });
         }
     })
+}
+
+function shippingInfo() {
+    if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
+        router.push('/shippinginfo');
+    }
+    else Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'warning',
+        text: 'You need have an account',
+        showConfirmButton: false,
+        timer: 1000
+    });
 }
 
 </script>
@@ -135,9 +151,9 @@ function remove(index) {
                         <span class='text-xl text-gray-800 font-semibold'>${{ cart.total }}</span>
                     </div>
 
-                    <RouterLink :to="'/shippinginfo'">
-                        <button class='w-full py-2 mt-8 bg-primary text-white rounded-lg text-base cursor-pointer'>Proceed to checkout</button>
-                    </RouterLink>
+                    <button @click="shippingInfo()"
+                        class='w-full py-2 mt-8 bg-primary text-white rounded-lg text-base cursor-pointer'>Proceed to
+                        checkout</button>
                 </div>
             </div>
         </div>
@@ -147,8 +163,8 @@ function remove(index) {
         <h1 class='text-lg md:text-4xl font-semibold mt-10 '>Your Cart is <span class='text-primary'>Empty!</span>
         </h1>
         <RouterLink to='/'>
-        <button class='text-lg md:text-xl font-semibold text-white bg-primary px-[50px] py-2 rounded-full mt-10'>Back to
-            shop</button>
+            <button class='text-lg md:text-xl font-semibold text-white bg-primary px-[50px] py-2 rounded-full mt-10'>Back to
+                shop</button>
         </RouterLink>
     </div>
 </template>

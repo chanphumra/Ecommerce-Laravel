@@ -9,6 +9,7 @@ const params = computed(() => {
     return route.params;
 });
 
+let token = ref('');
 let form = ref({
     name: '',
     description: '',
@@ -19,6 +20,7 @@ let imagePreview = ref("");
 
 onMounted(async () => {
     getCategory();
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 const getCategory = async () => {
@@ -49,7 +51,12 @@ function updateCategory() {
     formData.append('image', form.value.image);
     formData.append('_method', "PUT");
 
-    axios.post(`/api/category/${params.value.id}`, formData).then(res => {
+    axios.post(`/api/category/${params.value.id}`, formData, {
+        headers: {
+            'Authorization': `Bearer ${token.value}`,
+            'Accept': 'application/json'
+        }
+    }).then(res => {
         if (res.status == 200) Swal.fire({
             toast: true,
             position: 'top',

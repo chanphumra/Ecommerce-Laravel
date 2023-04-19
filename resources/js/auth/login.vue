@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -7,6 +7,23 @@ let form = ref({
     email: "",
     password: "",
     remember: false
+});
+
+onMounted(() => {
+    if (sessionStorage.getItem('token') || localStorage.getItem('token')) {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            showClass: {
+                icon: 'animated heartBeat delay-1s'
+            },
+            icon: 'info',
+            text: 'You have an account',
+            showConfirmButton: false,
+            timer: 1000
+        });
+        router.replace('/');
+    }
 });
 
 function login() {
@@ -28,10 +45,14 @@ function login() {
     formData.append('role', 0);
     axios.post('/api/auth/login', formData).then(res => {
         if (res.data.success) {
-            if(form.value.remember)
+            if (form.value.remember) {
                 localStorage.setItem("token", res.data.token);
-            else
+                sessionStorage.removeItem("token");
+            }
+            else {
                 sessionStorage.setItem("token", res.data.token);
+                localStorage.removeItem("token");
+            }
             Swal.fire({
                 toast: true,
                 position: 'top',
@@ -42,8 +63,6 @@ function login() {
                 text: 'Welcome back ' + res.data.user.name,
                 showConfirmButton: false,
                 timer: 1000
-            }).then(res => {
-                
             });
             router.replace("/");
         }
@@ -61,7 +80,7 @@ function login() {
             });
         }
     }).catch(err => {
-
+        console.log(err);
     });
 }
 </script>

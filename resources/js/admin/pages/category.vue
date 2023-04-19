@@ -3,6 +3,7 @@ import { computed } from '@vue/reactivity';
 import { onMounted, ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 
+let token = ref("");
 const router = useRouter();
 const header = ['CATEGORY NAME', 'DESCRIPTION', 'PUBLISHED ON'];
 const ITEM_PER_PAGE = 5;
@@ -13,6 +14,7 @@ let categories = ref([]);
 
 onMounted(async () => {
     getCategory();
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 let categoryByPage = computed(() => {
@@ -56,7 +58,12 @@ const deleteCategory = (id) => {
                     showConfirmButton: false,
                     timer: 1000
                 });
-            axios.delete("/api/category/" + id).then(res => {
+            axios.delete("/api/category/" + id, {
+                headers: {
+                    'Authorization': `Bearer ${token.value}`,
+                    'Accept': 'application/json'
+                }
+            }).then(res => {
                 if (res.status == 200) {
                     getCategory();
                     if ((categories.length - 1) % ITEM_PER_PAGE == 0) {

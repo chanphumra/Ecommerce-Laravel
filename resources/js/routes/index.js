@@ -5,7 +5,9 @@ import notFound from "../components/notFound.vue";
 import client from "../pages/public.vue";
 import home from "../pages/home.vue";
 import cart from "../pages/cart.vue";
+import products from "../pages/product.vue";
 import productdetail from "../pages/productdetail.vue";
+import productcategory from "../pages/productcategory.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
 import clientRegister from "../auth/register.vue";
@@ -13,6 +15,7 @@ import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
+import adminLogin from '../admin/auth/login.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
 import category from '../admin/pages/category.vue';
@@ -22,6 +25,7 @@ import product from '../admin/pages/product.vue';
 import editproduct from '../admin/pages/editproduct.vue';
 import addslideshow from '../admin/pages/addslideshow.vue';
 import slideshow from '../admin/pages/slideshow.vue';
+import editslideshow from '../admin/pages/editslideshow.vue';
 
 const routes = [
     {
@@ -39,22 +43,44 @@ const routes = [
                 name: 'cart'
             },
             {
+                path : '/product',
+                component : products, 
+                name: 'product'
+            },
+            {
                 path : '/productdetail/:id',
                 component : productdetail, 
                 name: 'productdetail'
             },
             {
+                path : '/productcategory/:id',
+                component : productcategory, 
+                name: 'productcategory'
+            },
+            {
                 path : '/shippinginfo',
                 component : shippinginfo, 
-                name: 'shippinginfo'
+                name: 'shippinginfo',
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
             },
             {
                 path : '/checkout',
                 component : checkout, 
                 name: 'checkout',
-                props: true
+                props: true,
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
             }
-        ]
+        ],
+        meta: {
+            adminAuth: false,
+            userAuth:false,
+        }
     },
     {
         path : '/admin',
@@ -105,32 +131,89 @@ const routes = [
                 component : slideshow, 
                 name: 'show_slideshow'
             },
-        ]
+            {
+                path : '/admin/edit_slideshow',
+                component : editslideshow, 
+                name: 'edit_slideshow'
+            },
+        ],
+        meta: {
+            adminAuth: true,
+            userAuth: false,
+        }
+    },
+    {
+        path: "/admin/login",
+        component: adminLogin,
+        name: adminLogin,
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
     },
     {
         path: '/register',
         component: clientRegister,
-        name: 'clientRegister'
+        name: 'clientRegister',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
     },
     {
         path: '/login',
         component: clientLogin,
-        name: 'clientLogin'
+        name: 'clientLogin',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
     },
     {
         path: '/verify/:email',
         component: verify,
         name: 'verify',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
     },
     {
         path: '/:notFound(.*)*',
         component: notFound,
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
     }
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes: routes
+});
+
+router.beforeEach((to, from, next) => {
+    /*========== adminAuth ==========*/
+    if(to.meta.adminAuth) {
+        if(!sessionStorage.getItem('adminToken'))
+            next('/admin/login');
+        else{
+            next();
+        }
+    }
+       
+    /*========== userAuth ==========*/
+    else{
+        if(to.meta.userAuth && !sessionStorage.getItem('token') && !localStorage.getItem('token')){
+            sessionStorage.removeItem("adminToken");
+            next('/login');
+        }
+        else{
+            sessionStorage.removeItem("adminToken");
+            next();
+        }
+    }
 });
 
 export default router;

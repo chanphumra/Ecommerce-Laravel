@@ -9,6 +9,7 @@ const params = computed(() => {
     return route.params;
 });
 
+let token = ref('');
 let form = ref({
     c_id: '',
     name: '',
@@ -25,6 +26,7 @@ let categories = ref([]);
 onMounted(async () => {
     getCategory();
     getProduct();
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 const getCategory = async () => {
@@ -100,7 +102,12 @@ const updateProduct = () => {
     formData.append('image3', form.value.image[2]);
     formData.append('_method', "PUT");
     
-    axios.post('/api/product/' + params.value.id, formData).then(res => {
+    axios.post('/api/product/' + params.value.id, formData, {
+        headers: {
+            'Authorization': `Bearer ${token.value}`,
+            'Accept': 'application/json'
+        }
+    }).then(res => {
         Swal.fire({
             toast: true,
             position: 'top',

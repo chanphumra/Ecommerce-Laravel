@@ -5,7 +5,7 @@
 @layer components{
    
     *{
-        @apply m-0 p-0 box-border outline-none border-none font-sans;
+        @apply m-0 p-0 box-border outline-none border-none font-sans
     }
     html, body{
         @apply bg-body
@@ -46,4 +46,4 @@
     header ul li{
         @apply max-lg:w-full max-lg:uppercase
     }
-};
+}

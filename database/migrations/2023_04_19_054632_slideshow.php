@@ -11,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_otp', function (Blueprint $table) {
+        //
+        Schema::create('slideshow', function (Blueprint $table){
             $table->id();
-            $table->string('email');
-            $table->string('otp');
+            $table->string('title');
+            $table->text('text');
+            $table->string('link');
+            $table->string('image');
+            $table->bigInteger('enable');
+            $table->bigInteger('orders');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
+
     }
 
     /**
@@ -26,6 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::dropIfExists('email_otp');
+        Schema::dropIfExists('slideshow');
     }
 };

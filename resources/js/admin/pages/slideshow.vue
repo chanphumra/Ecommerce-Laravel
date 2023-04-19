@@ -9,7 +9,7 @@ const ITEM_PER_PAGE = 5;
 let page = ref(0);
 let activePage = ref(1);
 
-let slideshow = ref([]);
+let slideshows = ref([]);
 
 onMounted(async () => {
     getSlideshow();
@@ -17,18 +17,17 @@ onMounted(async () => {
 
 let slideshowByPage = computed(() => {
     let slideshow = [];
-    for (let index = 0; index < slideshow.value.length; index++) {
+    for (let index = 0; index < slideshows.value.length; index++) {
         if (index >= (activePage.value - 1) * ITEM_PER_PAGE && index < activePage.value * ITEM_PER_PAGE)
-            slideshow.push(slideshow.value[index]);
+            slideshow.push(slideshows.value[index]);
     }
     return slideshow;
 });
 
 const getSlideshow = async () => {
     const respone = await axios.get('/api/slideshow');
-    console.log(respone.data.result.reverse());
-    slideshow.value = respone.data.result.reverse();
-    page = Math.ceil(slideshow.value.length / ITEM_PER_PAGE);
+    slideshows.value = respone.data.result.reverse();
+    page = Math.ceil(slideshows.value.length / ITEM_PER_PAGE);
 }
 
 const deleteSlideshow = (id) => {
@@ -45,7 +44,7 @@ const deleteSlideshow = (id) => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             const res = await axios.get("/api/slideshow/" + id);
-            if (res.data.result.products.length > 0)
+            if (res.data.result.slideshows.length > 0)
                 return Swal.fire({
                     toast: true,
                     position: 'top',
@@ -60,7 +59,7 @@ const deleteSlideshow = (id) => {
             axios.delete("/api/slideshow/" + id).then(res => {
                 if (res.status == 200) {
                     getCategory();
-                    if ((categories.length - 1) % ITEM_PER_PAGE == 0) {
+                    if ((slideshows.length - 1) % ITEM_PER_PAGE == 0) {
                         activePage = activePage - 1;
                     }
                     Swal.fire({

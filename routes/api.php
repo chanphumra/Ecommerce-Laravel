@@ -55,3 +55,7 @@ Route::apiResource('/category', CategoryController::class);
 |--------------------------------------------------------------------------
 */
 Route::apiResource('/product', ProductController::class);
+
+
+
+Route::apiResource('/slideshow', SlideshowController::class);

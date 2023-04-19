@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('text');
             $table->string('link');
             $table->string('image');
-            $table->bigInteger('enable');
+            $table->bigInteger('enable')->default(1);
             $table->bigInteger('orders');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();

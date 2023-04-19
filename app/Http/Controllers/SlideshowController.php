@@ -13,10 +13,10 @@ class SlideshowController extends Controller
     public function index()
     {
         //
-        $slideshow = Slideshow::where('enable', 1);
+        $slideshow = Slideshow::all();
         return response()->json([
             "result" => $slideshow
-        ], 100);
+        ], 200);
     }
 
     /**
@@ -32,7 +32,26 @@ class SlideshowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $slideshow = new Slideshow();
+        $slideshow->title = $request->title;
+        $slideshow->text = $request->text;
+        $slideshow->link = $request->link;
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $extension = strtolower($file->getClientOriginalExtension());
+            $image_name = time() . rand() . "." . $extension;
+            $uploads_path = "uploads/slideshow/";
+            $image_url = "/" . $uploads_path . $image_name;
+            $file->move($uploads_path, $image_name);
+            $slideshow->image = $image_url;
+        }
+        $slideshow->save();
+
+        return response()->json([
+            "success" => true,
+            "insert_id" => $slideshow->id
+        ],200);
     }
 
     /**

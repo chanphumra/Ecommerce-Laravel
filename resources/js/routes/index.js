@@ -21,6 +21,7 @@ import addproduct from '../admin/pages/addproduct.vue';
 import product from '../admin/pages/product.vue';
 import editproduct from '../admin/pages/editproduct.vue';
 import addslideshow from '../admin/pages/addslideshow.vue';
+import slideshow from '../admin/pages/slideshow.vue';
 
 const routes = [
     {
@@ -98,6 +99,11 @@ const routes = [
                 path : '/admin/add_slideshow',
                 component : addslideshow, 
                 name: 'add_slideshow'
+            },
+            {
+                path : '/admin/show_slideshow',
+                component : slideshow, 
+                name: 'show_slideshow'
             },
         ]
     },

@@ -13,6 +13,10 @@ class SlideshowController extends Controller
     public function index()
     {
         //
+        $slideshow = Slideshow::where('enable', 1);
+        return response()->json([
+            "result" => $slideshow
+        ], 100);
     }
 
     /**

@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Slideshow extends Model
 {
     use HasFactory;
+
     protected $table = "slideshow";
+    protected $guarded = ["id"];
 }

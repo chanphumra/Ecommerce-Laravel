@@ -20,6 +20,7 @@ import editcategory from '../admin/pages/editcategory.vue';
 import addproduct from '../admin/pages/addproduct.vue';
 import product from '../admin/pages/product.vue';
 import editproduct from '../admin/pages/editproduct.vue';
+import addslideshow from '../admin/pages/addslideshow.vue';
 
 const routes = [
     {
@@ -92,6 +93,11 @@ const routes = [
                 path : '/admin/edit_product/:id',
                 component : editproduct, 
                 name: 'edit_product'
+            },
+            {
+                path : '/admin/add_slideshow',
+                component : addslideshow, 
+                name: 'add_slideshow'
             },
         ]
     },

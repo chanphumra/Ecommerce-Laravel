@@ -26,6 +26,7 @@ let slideshowByPage = computed(() => {
 
 const getSlideshow = async () => {
     const respone = await axios.get('/api/slideshow');
+    console.log(respone.data.result.reverse());
     slideshow.value = respone.data.result.reverse();
     page = Math.ceil(slideshow.value.length / ITEM_PER_PAGE);
 }

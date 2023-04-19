@@ -25,10 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-<<<<<<< HEAD
-        //
-=======
->>>>>>> ad9be8370c217a710a1493ea79b6f74d2742d600
         Schema::dropIfExists('email_otp');
     }
 };

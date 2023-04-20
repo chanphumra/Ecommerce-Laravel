@@ -15,11 +15,12 @@ let cart = reactive(JSON.parse(localStorage.getItem('carts')) || {
     discount_price: 0,
     total: 0
 });
-const router = useRoute();
+const route = useRoute();
 
 onMounted(async () => {
     getCategory();
 });
+
 
 let productPerPage = computed(() => {
     let product = [];
@@ -31,7 +32,7 @@ let productPerPage = computed(() => {
 });
 
 const getCategory = async () => {
-    const respone = await axios.get('/api/category/' + router.params.id);
+    const respone = await axios.get('/api/category/' + route.params.id);
     category.value = respone.data.result;
     products.value = respone.data.result.products;
     page = Math.ceil(products.value.length / ITEM_PER_PAGE);

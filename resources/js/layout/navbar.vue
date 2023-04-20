@@ -1,11 +1,11 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 
 const routerName = computed(() => {
     return useRoute().name;
 });
-
+const router = useRouter();
 let openCategory = ref(false);
 let openMenu = ref(false);
 let categories = ref([]);
@@ -42,6 +42,11 @@ const getCategory = async () => {
     categories = respone.data.result;
 }
 
+function productCategory(id) {
+    openCategory.value = false;
+    router.push(`/productcategory/${id}`).then(() => {router.go()});
+}
+
 </script>
 
 <template>
@@ -55,12 +60,11 @@ const getCategory = async () => {
             </div>
             <div v-if="openCategory"
                 class="absolute border border-gray-300 border-1 px-2 top-[125%] left-0 w-[280px] md:w-[600px] overflow-y-auto md:overflow-hidden h-[500px] md:h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 z-30 shadow-sm rounded-sm bg-white scroll-smooth scrollbar-thin scrollbar-track-gray-200 scrollbar-track-rounded-xl scrollbar-thumb-[#cfcfcf] scrollbar-thumb-rounded-xl">
-                <RouterLink v-for="item in categories" :to="'/productcategory/' + item.id" @click="openCategory = false">
-                    <div class="flex items-center gap-2 py-2 cursor-pointer rounded">
-                        <img :src="item.image" alt="" class="w-6 h-6 object-cover">
-                        <p class="w-[170px] truncate">{{ item.name }}</p>
-                    </div>
-                </RouterLink>
+                <div v-for="item in categories" @click="productCategory(item.id)"
+                    class="flex items-center gap-2 py-2 cursor-pointer rounded">
+                    <img :src="item.image" alt="" class="w-6 h-6 object-cover">
+                    <p class="w-[170px] truncate">{{ item.name }}</p>
+                </div>
             </div>
         </div>
 

@@ -15,6 +15,7 @@ import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
+import adminOrder from '../admin/pages/order.vue';
 import adminLogin from '../admin/auth/login.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
@@ -91,6 +92,11 @@ const routes = [
                 path : '/admin',
                 component : dashboard, 
                 name: 'dashboard'
+            },
+            {
+                path : '/admin/orders',
+                component : adminOrder, 
+                name: 'orders'
             },
             {
                 path : '/admin/add_category',

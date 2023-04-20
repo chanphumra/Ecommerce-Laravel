@@ -25,13 +25,13 @@ let categories = ref([]);
 
 onMounted(async () => {
     getCategory();
-    getProduct();
     token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 const getCategory = async () => {
     const respone = await axios.get('/api/category');
     categories = respone.data.result;
+    getProduct();
 }
 
 const getProduct = async () => {
@@ -132,7 +132,7 @@ const updateProduct = () => {
         <div class="flex justify-between items-end">
             <h1 class='text-3xl font-bold text-black_500'>Edit a product</h1>
             <button @click="updateProduct()"
-                class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Publish
+                class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Edit
                 product</button>
         </div>
         <div class="mt-10 flex flex-col gap-8 md:flex-row">

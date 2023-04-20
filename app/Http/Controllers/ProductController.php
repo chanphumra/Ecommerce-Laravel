@@ -70,6 +70,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if ($product) {
+            $product->c_id = $request->c_id;
             $product->name = $request->name;
             $product->description = $request->description;
             $product->price = $request->price;

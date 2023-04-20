@@ -59,9 +59,6 @@ function setIcon(icon) {
                                 class='w-4 h-4 border-solid border border-gray-500 rounded-[4px] checked:rounded-[4px]' />
                         </th>
                         <th v-for="item in header" class='text-start text-gray-600 text-sm py-2 px-3'>{{ item }}</th>
-                        <th class='text-endt text-gray-600 text-sm py-2 px-3 pr-4'>
-
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,26 +77,6 @@ function setIcon(icon) {
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{item.payment_method}}</td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{item.created_at}}</td>
-                        <td class='text-lg w-4 text-gray-700 py-2 px-3 pr-5'>
-                            <div class="w-4 h-4"><img :src="setIcon('more.svg')" alt="" /></div>
-                        </td>
-
-                        <div class='hidden group-hover:flex absolute right-0 top-[50%] translate-y-[-50%] pr-[10px]  gap-1'>
-                            <div
-                                class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
-                                <img :src="setIcon('check.svg')" alt="" class="w-[14px] h-[14px]">
-                            </div>
-                            <RouterLink :to="'/admin/edit_product/' + item.id">
-                                <div
-                                    class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
-                                    <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
-                                </div>
-                            </RouterLink>
-                            <div @click="deleteProduct(item.id)"
-                                class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
-                                <img :src="setIcon('trash.svg')" alt="" class="w-[14px] h-[14px]">
-                            </div>
-                        </div>
                     </tr>
                 </tbody>
             </table>

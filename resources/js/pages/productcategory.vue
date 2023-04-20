@@ -3,7 +3,7 @@ import { computed } from '@vue/reactivity';
 import { onMounted, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
-const ITEM_PER_PAGE = 1;
+const ITEM_PER_PAGE = 20;
 let page = ref(0);
 let activePage = ref(1);
 let openId = ref(0);

@@ -3,6 +3,7 @@ import { computed } from '@vue/reactivity';
 import { onMounted, ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 
+let token = ref("");
 const router = useRouter();
 const header = ['SLIDESHOW TITLE', 'TEXT', 'LINK', 'PUBLISHED ON'];
 const ITEM_PER_PAGE = 5;
@@ -13,7 +14,7 @@ let slideshows = ref([]);
 
 onMounted(async () => {
     getSlideshow();
-    console.log(slideshows.value)
+    token.value = sessionStorage.getItem('adminToken') || '';
 });
 
 let slideshowByPage = computed(() => {
@@ -28,11 +29,62 @@ let slideshowByPage = computed(() => {
 const getSlideshow = async () => {
     const respone = await axios.get('/api/slideshow');
     slideshows.value = respone.data.result.reverse();
-    console.log(slideshows.value)
     page = Math.ceil(slideshows.value.length / ITEM_PER_PAGE);
 }
 
-
+const deleteSlideshow = (id) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this slideshow!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        confirmButtonColor: '#42b883',
+        cancelButtonColor: '#d33',
+        reverseButtons: true
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const res = await axios.get("/api/slideshow/" + id);
+            if (res.data.result.length > 0)
+                return Swal.fire({
+                    toast: true,
+                    position: 'top',
+                    showClass: {
+                        icon: 'animated heartBeat delay-1s'
+                    },
+                    icon: 'warning',
+                    text: 'Slideshow not empty!',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            axios.delete("/api/slideshow/" + id, {
+                headers: {
+                    'Authorization': `Bearer ${token.value}`,
+                    'Accept': 'application/json'
+                }
+            }).then(res => {
+                if (res.status == 200) {
+                    getSlideshow();
+                    if ((slideshows.length - 1) % ITEM_PER_PAGE == 0) {
+                        activePage = activePage - 1;
+                    }
+                    Swal.fire({
+                        toast: true,
+                        position: 'top',
+                        showClass: {
+                            icon: 'animated heartBeat delay-1s'
+                        },
+                        icon: 'success',
+                        text: 'Slideshow has been delete!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                }
+            });
+        }
+    })
+}
 
 function setIcon(icon) {
     return "/icons/" + icon;
@@ -50,13 +102,13 @@ function Image(image) {
     </div>
     <div class="flex gap-4 flex-col md:flex-row lg:items-center justify-between px-5 lg:px-10 mb-4">
         <div class='relative'>
-            <input type="text" name="" id="" placeholder='Search category'
+            <input type="text" name="" id="" placeholder='Search slideshow'
                 class='text-sm pl-10 w-full lg:w-[300px] h-[40px] rounded-md border-gray-300 border-solid border focus:border-current focus:ring-current' />
             <img :src="setIcon('search.svg')" alt="" class="absolute top-[50%] left-3 translate-y-[-50%] w-4 h-4" />
         </div>
-        <RouterLink to="/admin/add_category">
+        <RouterLink to="/admin/add_slideshow">
             <button class='flex items-center gap-1 px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>
-                <img :src="setIcon('plus.svg')" alt="" />Add Category
+                <img :src="setIcon('plus.svg')" alt="" />Add Slideshow
             </button>
         </RouterLink>
     </div>
@@ -112,7 +164,7 @@ function Image(image) {
                                     <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
                                 </div>
                             </RouterLink>
-                            <div @click=""
+                            <div @click="deleteSlideshow(item.id)"
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('trash.svg')" alt="" class="w-[14px] h-[14px]">
                             </div>

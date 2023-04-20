@@ -26,6 +26,7 @@ import editproduct from '../admin/pages/editproduct.vue';
 import addslideshow from '../admin/pages/addslideshow.vue';
 import slideshow from '../admin/pages/slideshow.vue';
 import editslideshow from '../admin/pages/editslideshow.vue';
+import siteprofile from '../admin/pages/siteprofile.vue'
 
 const routes = [
     {
@@ -132,9 +133,14 @@ const routes = [
                 name: 'show_slideshow'
             },
             {
-                path : '/admin/edit_slideshow',
+                path : '/admin/edit_slideshow/:id',
                 component : editslideshow, 
                 name: 'edit_slideshow'
+            },
+            {
+                path : '/admin/site_profile',
+                component : siteprofile, 
+                name: 'site_profile'
             },
         ],
         meta: {

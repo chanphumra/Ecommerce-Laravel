@@ -71,7 +71,7 @@ function saveSlideshow() {
                 icon: 'animated heartBeat delay-1s'
             },
             icon: 'success',
-            text: 'Category has been saved',
+            text: 'Slideshow has been saved',
             showConfirmButton: false,
             timer: 1000
         }).then(r => {
@@ -88,7 +88,7 @@ function saveSlideshow() {
         <div class="flex justify-between items-end">
             <h1 class='text-3xl font-bold text-black_500'>Add a slideshow</h1>
             <button class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'
-                @click="saveSlideshow()">Publish category</button>
+                @click="saveSlideshow()">Publish slideshow</button>
         </div>
         <div class="mt-10 flex flex-col gap-8 md:flex-row">
             <div class='flex-[4]'>
@@ -129,7 +129,7 @@ function saveSlideshow() {
                     <div
                         class="relative h-[200px] mt-3 border-dashed border-2 border-gray-300 rounded-lg flex flex-col justify-center items-center">
                         <i class="fas fa-cloud-upload text-primary text-[46px]"></i>
-                        <p class='text-[15px] text-gray-600'>Browse category image</p>
+                        <p class='text-[15px] text-gray-600'>Browse slideshow image</p>
                         <input class='absolute w-full h-full opacity-0 cursor-pointer' type="file" name="" id=""
                             accept="image/*" @change="browseImage" />
                     </div>

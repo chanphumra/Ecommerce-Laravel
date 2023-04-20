@@ -57,10 +57,10 @@ class SlideshowController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Slideshow $slideshow)
+    public function show(string $id)
     {
         //
-        $slideshow = Category::find($id);
+        $slideshow = Slideshow::find($id);
         
         return response()->json([
             "result" => $slideshow
@@ -78,16 +78,55 @@ class SlideshowController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slideshow $slideshow)
+    public function update(Request $request, string $id)
     {
-        //
+        $slideshow = Slideshow::find($id);
+        if ($slideshow) {
+            $slideshow->title = $request->title;
+            $slideshow->text = $request->text;
+            $slideshow->link = $request->link;
+
+            if ($request->hasFile('image')) {
+                /*======= delete old image ======*/
+                if (file_exists(substr($slideshow->image, 1))) unlink(substr($slideshow->image, 1));
+
+                /*======= update database ======*/
+                $file = $request->file('image');
+                $extention = strtolower($file->getClientOriginalExtension());
+                $image_name = time() . rand() . "." . $extention;
+                $uploads_path = "uploads/slideshow/";
+                $image_url = "/" . $uploads_path . $image_name;
+                $file->move($uploads_path, $image_name);
+                $slideshow->image = $image_url;
+            }
+            $slideshow->save();
+            return response()->json([
+                "success" => true
+            ], 200);
+        } 
+        return response()->json([
+            "message" => "slideshow not found"
+        ], 400);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slideshow $slideshow)
+    public function destroy(string $id)
     {
-        //
+        $slideshow = Slideshow::find($id);
+        if ($slideshow) {
+            /*======= delete image ======*/
+            if (file_exists(substr($slideshow->image, 1))) unlink(substr($slideshow->image, 1));
+
+            /*======= delete database ======*/
+            $slideshow->delete();
+            return response()->json([
+                "success" => true
+            ], 200);
+        }
+        return response()->json([
+            "message" => "slideshow not found"
+        ], 400);
     }
 }

@@ -73,6 +73,10 @@ Route::get('/category/{category}', [CategoryController::class, 'show']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
 
-
+/*
+|--------------------------------------------------------------------------
+| Slideshow API Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/slideshow', [SlideshowController::class, 'index']);
 Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);

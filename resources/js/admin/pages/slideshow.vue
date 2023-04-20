@@ -86,6 +86,35 @@ const deleteSlideshow = (id) => {
     })
 }
 
+const updateEnable = (id, enable) => {
+    const formData = new FormData();
+    formData.append('enable', enable == 1 ? 0 : 1);
+    formData.append('_method', "PUT");
+    axios.post('/api/slideshow/updateEnable/' + id, formData, {
+        headers: {
+            'Authorization': `Bearer ${token.value}`,
+            'Accept': 'application/json'
+        }
+    }).then(res => {
+        if (res.data.success) {
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                showClass: {
+                    icon: 'animated heartBeat delay-1s'
+                },
+                icon: 'success',
+                text: `Slideshow has been ${enable == 1 ? 'disable' : 'enable'}`,
+                showConfirmButton: false,
+                timer: 1000
+            });
+            getSlideshow();
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 function setIcon(icon) {
     return "/icons/" + icon;
 }
@@ -143,10 +172,10 @@ function Image(image) {
                             </p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>
-                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.text}}</p>
+                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.text }}</p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>
-                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.link}}</p>
+                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.link }}</p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{ item.created_at }}</td>
                         <td class='text-lg w-4 text-gray-700 py-2 px-3 pr-5'>
@@ -157,6 +186,11 @@ function Image(image) {
                             <div
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('check.svg')" alt="" class="w-[14px] h-[14px]">
+                            </div>
+                            <div @click="updateEnable(item.id, item.enable)"
+                                class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
+                                <img :src="setIcon(item.enable == 1 ? 'eye.svg' : 'eye-off.svg')" alt=""
+                                    class="w-[14px] h-[14px]">
                             </div>
                             <RouterLink :to="'/admin/edit_slideshow/' + item.id">
                                 <div

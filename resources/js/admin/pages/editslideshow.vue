@@ -14,22 +14,24 @@ let form = ref({
     title: '',
     text: '',
     link: '',
-    image: ''
+    image: '',
+    enable: false
 });
 
 let imagePreview = ref("");
 
 onMounted(async () => {
-    getCategory();
+    getSlideshow();
     token.value = sessionStorage.getItem('adminToken') || '';
 });
 
-const getCategory = async () => {
+const getSlideshow = async () => {
     const respone = await axios.get(`/api/slideshow/${params.value.id}`);
     if (respone.status == 200) {
         form.value.title = respone.data.result.title;
         form.value.text = respone.data.result.text;
         form.value.link = respone.data.result.link;
+        form.value.enable = respone.data.result.enable == 1 ? true : false;
         imagePreview.value = respone.data.result.image;
     }
 }
@@ -52,6 +54,7 @@ function updateSlideshow() {
     formData.append('text', form.value.text);
     formData.append('link', form.value.link);
     formData.append('image', form.value.image);
+    formData.append('enable', form.value.enable ? 1 : 0);
     formData.append('_method', "PUT");
 
     axios.post(`/api/slideshow/${params.value.id}`, formData, {
@@ -103,7 +106,11 @@ function browseImage(e) {
         <div class="mt-10 flex flex-col gap-8 md:flex-row">
             <div class='flex-[4]'>
                 <div class="flex justify-between">
-                    <h1 class='text-xl font-semibold text-gray-800'>Slideshow Title</h1>
+                    <h1 class='text-xl font-semibold text-gray-800'>Title</h1>
+                    <div class="flex items-center gap-2">
+                        <input v-model="form.enable" type="checkbox" id="enable" class="accent-current border border-solid border-gray-300 rounded-sm cursor-pointer focus:ring-primary">
+                        <label for="enable">Enable</label>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <input type="text" name="" id="" class='input text-sm w-full' placeholder='Write title here...'

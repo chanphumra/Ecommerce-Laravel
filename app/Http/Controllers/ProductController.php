@@ -59,8 +59,7 @@ class ProductController extends Controller
             return response()->json([
                 "result" => $product
             ], 200);
-        }
-        else{
+        } else {
             return response()->json([
                 "message" => "product not found"
             ], 400);
@@ -70,7 +69,7 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::find($id);
-        if($product){
+        if ($product) {
             $product->name = $request->name;
             $product->description = $request->description;
             $product->price = $request->price;
@@ -84,7 +83,7 @@ class ProductController extends Controller
                 if (file_exists(substr($product->image1, 1))) unlink(substr($product->image1, 1));
                 if (file_exists(substr($product->image2, 1))) unlink(substr($product->image2, 1));
                 if (file_exists(substr($product->image3, 1))) unlink(substr($product->image3, 1));
-                
+
                 /*========== update database ==========*/
                 $imageArray = [$request->file('image1'), $request->file('image2'), $request->file('image3')];
                 for ($index = 0; $index < count($imageArray); $index++) {
@@ -104,7 +103,6 @@ class ProductController extends Controller
             return response()->json([
                 "success" => true
             ], 200);
-
         }
         return response()->json([
             "message" => "product not found"
@@ -126,6 +124,24 @@ class ProductController extends Controller
                 "success" => true
             ], 200);
         }
+        return response()->json([
+            "message" => "product not found"
+        ], 400);
+    }
+
+    public function clearStock(Request $request, string $id)
+    {
+        $qty = $request->qty;
+        $product = Product::find($id);
+        if($product){
+            $product->qty = $product->qty - $qty;
+            $product->save();
+
+            return response()->json([
+                "message" => "update stock success"
+            ], 200);
+        }
+
         return response()->json([
             "message" => "product not found"
         ], 400);

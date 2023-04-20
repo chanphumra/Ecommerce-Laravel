@@ -15,6 +15,24 @@ let form = ref({
 let router = useRouter();
 let cart = reactive(JSON.parse(localStorage.getItem('carts')) || { products: [], subtotal: 0, discount_price: 0, total: 0 });
 
+onMounted(() => {
+    if (cart.products.length == 0) {
+        Swal.fire({
+            toast: true,
+            position: 'top',
+            showClass: {
+                icon: 'animated heartBeat delay-1s'
+            },
+            icon: 'warning',
+            text: 'Your cart is empty!',
+            showConfirmButton: false,
+            timer: 1000
+        });
+        router.replace('/');
+        return;
+    }
+});
+
 function checkout() {
     router.push('checkout?data=' + JSON.stringify(form.value));
 }

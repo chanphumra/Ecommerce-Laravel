@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SlideshowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::put('/product/{product}', [ProductController::class, 'update']);
     Route::delete('/product/{product}', [ProductController::class, 'destroy']);
     Route::put('/product/clearStock/{product}', [ProductController::class, 'clearStock']);
+
+    Route::post('/slideshow', [SlideshowController::class, 'store']);
+    Route::put('/slideshow/{slideshow}', [SlideshowController::class, 'update']);
+    Route::delete('/slideshow/{slideshow}', [SlideshowController::class, 'destroy']);
 });
 
 /*
@@ -79,3 +84,11 @@ Route::get('/order', [OrderController::class, 'index']);
 Route::get('/order/{order}', [OrderController::class, 'show']);
 Route::post('/order/store', [OrderController::class, 'store']);
 Route::post('/order/storeDetail', [OrderController::class, 'storeDetail']);
+
+/*
+|--------------------------------------------------------------------------
+| Slideshow API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/slideshow', [SlideshowController::class, 'index']);
+Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);

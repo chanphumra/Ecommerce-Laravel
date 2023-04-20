@@ -23,6 +23,10 @@ import editcategory from '../admin/pages/editcategory.vue';
 import addproduct from '../admin/pages/addproduct.vue';
 import product from '../admin/pages/product.vue';
 import editproduct from '../admin/pages/editproduct.vue';
+import addslideshow from '../admin/pages/addslideshow.vue';
+import slideshow from '../admin/pages/slideshow.vue';
+import editslideshow from '../admin/pages/editslideshow.vue';
+import siteprofile from '../admin/pages/siteprofile.vue'
 
 const routes = [
     {
@@ -117,6 +121,26 @@ const routes = [
                 path : '/admin/edit_product/:id',
                 component : editproduct, 
                 name: 'edit_product'
+            },
+            {
+                path : '/admin/add_slideshow',
+                component : addslideshow, 
+                name: 'add_slideshow'
+            },
+            {
+                path : '/admin/show_slideshow',
+                component : slideshow, 
+                name: 'show_slideshow'
+            },
+            {
+                path : '/admin/edit_slideshow/:id',
+                component : editslideshow, 
+                name: 'edit_slideshow'
+            },
+            {
+                path : '/admin/site_profile',
+                component : siteprofile, 
+                name: 'site_profile'
             },
         ],
         meta: {

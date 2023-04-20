@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('link');
             $table->string('image');
             $table->bigInteger('enable')->default(1);
-            $table->bigInteger('orders');
+            $table->bigInteger('orders')->default(1);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
         });

@@ -60,6 +60,11 @@ class SlideshowController extends Controller
     public function show(Slideshow $slideshow)
     {
         //
+        $slideshow = Category::find($id);
+        
+        return response()->json([
+            "result" => $slideshow
+        ], 200);
     }
 
     /**

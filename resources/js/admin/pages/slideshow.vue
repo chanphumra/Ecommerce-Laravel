@@ -13,6 +13,7 @@ let slideshows = ref([]);
 
 onMounted(async () => {
     getSlideshow();
+    console.log(slideshows.value)
 });
 
 let slideshowByPage = computed(() => {
@@ -27,57 +28,11 @@ let slideshowByPage = computed(() => {
 const getSlideshow = async () => {
     const respone = await axios.get('/api/slideshow');
     slideshows.value = respone.data.result.reverse();
+    console.log(slideshows.value)
     page = Math.ceil(slideshows.value.length / ITEM_PER_PAGE);
 }
 
-const deleteSlideshow = (id) => {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You want to delete this slideshow!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        confirmButtonColor: '#42b883',
-        cancelButtonColor: '#d33',
-        reverseButtons: true
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            const res = await axios.get("/api/slideshow/" + id);
-            if (res.data.result.slideshows.length > 0)
-                return Swal.fire({
-                    toast: true,
-                    position: 'top',
-                    showClass: {
-                        icon: 'animated heartBeat delay-1s'
-                    },
-                    icon: 'warning',
-                    text: 'Category not empty!',
-                    showConfirmButton: false,
-                    timer: 1000
-                });
-            axios.delete("/api/slideshow/" + id).then(res => {
-                if (res.status == 200) {
-                    getCategory();
-                    if ((slideshows.length - 1) % ITEM_PER_PAGE == 0) {
-                        activePage = activePage - 1;
-                    }
-                    Swal.fire({
-                        toast: true,
-                        position: 'top',
-                        showClass: {
-                            icon: 'animated heartBeat delay-1s'
-                        },
-                        icon: 'success',
-                        text: 'Slideshow has been delete!',
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                }
-            });
-        }
-    })
-}
+
 
 function setIcon(icon) {
     return "/icons/" + icon;
@@ -157,7 +112,7 @@ function Image(image) {
                                     <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
                                 </div>
                             </RouterLink>
-                            <div @click="deleteCategory(item.id)"
+                            <div @click=""
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('trash.svg')" alt="" class="w-[14px] h-[14px]">
                             </div>
@@ -183,11 +138,11 @@ function Image(image) {
             <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-gray-700">Showing
-                        <span class="font-medium">{{ categories.length > 0 ? (activePage - 1) * ITEM_PER_PAGE + 1 :
+                        <span class="font-medium">{{ slideshows.length > 0 ? (activePage - 1) * ITEM_PER_PAGE + 1 :
                             0 }}</span> to
-                        <span class="font-medium">{{ (categories.length - (activePage - 1) * ITEM_PER_PAGE) > ITEM_PER_PAGE
-                            ? activePage * ITEM_PER_PAGE : categories.length }}</span> of
-                        <span class="font-medium">{{ categories.length }}</span> results
+                        <span class="font-medium">{{ (slideshows.length - (activePage - 1) * ITEM_PER_PAGE) > ITEM_PER_PAGE
+                            ? activePage * ITEM_PER_PAGE : slideshows.length }}</span> of
+                        <span class="font-medium">{{ slideshows.length }}</span> results
                     </p>
                 </div>
                 <div>

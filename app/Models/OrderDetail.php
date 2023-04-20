@@ -11,4 +11,8 @@ class OrderDetail extends Model
 
     protected $table = "order_details";
     protected $guarded = ["id"];
+
+    public function products () {
+        return $this->belongsTo(Product::class, 'p_id');
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -67,3 +68,11 @@ Route::get('/category/{category}', [CategoryController::class, 'show']);
 */
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
+
+/*
+|--------------------------------------------------------------------------
+| Order API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/order', [OrderController::class, 'index']);
+Route::get('/order/{order}', [OrderController::class, 'show']);

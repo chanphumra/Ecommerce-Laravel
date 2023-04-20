@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const header = ['PRODUCT NAME', 'PRICE', 'IN STOCK', 'DISCOUNT', 'CATEGORY', 'PUBLISHED ON'];
-const ITEM_PER_PAGE = 1;
+const ITEM_PER_PAGE = 5;
 let page = ref(0);
 let activePage = ref(1);
 let products = ref([]);

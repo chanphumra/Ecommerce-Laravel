@@ -57,7 +57,7 @@ function updateProfile() {
     formData.append('image', form.value.image);
     formData.append('_method', "PUT");
 
-    axios.post(`/api/slideshow/1`, formData, {
+    axios.post(`/api/profile_setting/1`, formData, {
         headers: {
             'Authorization': `Bearer ${token.value}`,
             'Accept': 'application/json'

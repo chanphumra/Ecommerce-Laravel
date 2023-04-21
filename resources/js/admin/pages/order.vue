@@ -68,15 +68,20 @@ function setIcon(icon) {
                                 class='w-4 h-4 border-solid border border-gray-500 rounded-[4px] checked:rounded-[4px]' />
                         </td>
                         <td class='text-ph font-semibold text-primary hover:underline cursor-pointer py-2 px-3'>
-                            <p>#{{item.id}}</p>
+                            <RouterLink :to="'/admin/ordersdetail/' + item.id" class="w-full h-full">
+                                <p>#{{ item.id }}</p>
+                            </RouterLink>
                         </td>
-                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>${{item.total}}</td>
+                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>${{ item.total }}</td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3 flex items-center gap-1'>
-                            <img :src="item.customer.image" alt="" class='w-[40px] h-[40px] border-solid border border-gray-300 rounded-full object-cover' />
-                            <p class='text-ph font-semibold text-gray-700 py-2 px-3 hover:underline hover:text-primary cursor-pointer'>{{item.customer.name}}</p>
+                            <img :src="item.customer.image" alt=""
+                                class='w-[40px] h-[40px] border-solid border border-gray-300 rounded-full object-cover' />
+                            <p
+                                class='text-ph font-semibold text-gray-700 py-2 px-3 hover:underline hover:text-primary cursor-pointer'>
+                                {{ item.customer.name }}</p>
                         </td>
-                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{item.payment_method}}</td>
-                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{item.created_at}}</td>
+                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{ item.payment_method }}</td>
+                        <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{ item.created_at }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -127,5 +132,5 @@ function setIcon(icon) {
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>

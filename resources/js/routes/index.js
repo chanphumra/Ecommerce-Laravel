@@ -5,6 +5,8 @@ import notFound from "../components/notFound.vue";
 import client from "../pages/public.vue";
 import home from "../pages/home.vue";
 import cart from "../pages/cart.vue";
+import clientOrder from "../pages/order.vue";
+import clientOrderDetail from "../pages/orderdetail.vue";
 import products from "../pages/product.vue";
 import productdetail from "../pages/productdetail.vue";
 import productcategory from "../pages/productcategory.vue";
@@ -16,6 +18,7 @@ import verify from "../auth/verify.vue";
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
 import adminOrder from '../admin/pages/order.vue';
+import adminOrderDetail from '../admin/pages/orderdatail.vue';
 import adminLogin from '../admin/auth/login.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
@@ -43,6 +46,24 @@ const routes = [
                 path : '/cart',
                 component : cart, 
                 name: 'cart'
+            },
+            {
+                path : '/order',
+                component : clientOrder, 
+                name: 'clientorder',
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
+            },
+            {
+                path : '/orderdetail/:id',
+                component : clientOrderDetail, 
+                name: 'clientorderdetail',
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
             },
             {
                 path : '/product',
@@ -97,6 +118,11 @@ const routes = [
                 path : '/admin/orders',
                 component : adminOrder, 
                 name: 'orders'
+            },
+            {
+                path : '/admin/ordersdetail/:id',
+                component : adminOrderDetail, 
+                name: 'orderdetail'
             },
             {
                 path : '/admin/add_category',

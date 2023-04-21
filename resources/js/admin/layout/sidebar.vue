@@ -11,6 +11,7 @@ const routeName = computed(() => {
     if(name == "edit_category") name = "show_category";
     if(name == "edit_product") name = "show_product";
     if(name == "edit_slideshow") name = "show_slideshow";
+    if(name == "orderdetail") name = "orders";
     return name;
 });
 

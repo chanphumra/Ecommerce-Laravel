@@ -47,6 +47,10 @@ setInterval(() => {
     };
     countCart.value = cart.products.length;
 }, 0);
+
+function yourOrder() {
+    router.push('/order');
+}
 </script>
 
 <template>
@@ -88,12 +92,11 @@ setInterval(() => {
                             class='fa fa-user w-10 h-10 md:w-[46px] md:h-[46px] bg-[#f3f5f9] rounded-full text-center leading-10 md:leading-[46px] cursor-pointer object-cover' />
                         <p class='text-base font-semibold truncate'>{{ user.name }}</p>
                         <div class="flex gap-2 items-center mt-5 cursor-pointer hover:underline">
-                            <BiUser class='text-lg ' />
-                            <p class='text-sm
-                                    font-semibold text-gray-800'>Profile</p>
+                            <i class="fas fa-user text-sm text-gray-700"></i>
+                            <p class='text-sm font-semibold text-gray-800'>Profile</p>
                         </div>
-                        <div class="flex gap-2 items-center mt-3 cursor-pointer hover:underline">
-                            <BsBag class='text-lg font-semibold' />
+                        <div class="flex gap-2 items-center mt-3 cursor-pointer hover:underline" @click="yourOrder()">
+                            <i class="fas fa-shopping-bag text-sm text-gray-700"></i>
                             <p class='text-sm font-semibold text-gray-800'>Orders</p>
                         </div>
                         <div class="border-t border-solid border-gray-300 mt-7">

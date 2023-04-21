@@ -6,6 +6,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\ProfilesettingController;
+use App\Http\Controllers\FooterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::delete('/slideshow/{slideshow}', [SlideshowController::class, 'destroy']);
 
     Route::put('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'update']);
+
+    Route::put('/footer', [FooterController::class, 'update']);
 });
 
 /*
@@ -90,3 +93,9 @@ Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
 */
 Route::get('/profile_setting', [ProfilesettingController::class, 'index']);
 Route::get('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'show']);
+/*
+|--------------------------------------------------------------------------
+| Site Profile API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/footer', [FooterController::class, 'index']);

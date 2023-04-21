@@ -17,7 +17,6 @@ onMounted(async () => {
 const getSlideshow = async () => {
     const respone = await axios.get('/api/slideshow');
     slideshows.value = respone.data.result.filter(slideshow => slideshow.enable == 1).reverse();
-    page = Math.ceil(slideshows.value.length / ITEM_PER_PAGE);
 }
 </script>
 

@@ -128,10 +128,14 @@ function Verify() {
 
     const formData = new FormData();
     formData.append("email", route.params.email);
+    formData.append("newpassword", route.params.password);
     formData.append("otp", otp);
 
     axios.post("/api/auth/verify", formData).then(res => {
         if (res.data.success) {
+
+            /*============ update password ===========*/
+            axios.post('/api/auth/updatePassword/' + route.params.email, formData).then(() => {}).catch(err => {console.log(err)});
             Swal.fire({
                 toast: true,
                 position: 'top',

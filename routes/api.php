@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -50,6 +51,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/auth/exist', [AuthController::class, 'exist']);
 Route::post('/auth/verify', [AuthController::class, 'verify']);
+Route::post('/auth/updatePassword/{email}', [AuthController::class, 'updatePassword']);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,3 +95,11 @@ Route::post('/order/storeDetail', [OrderController::class, 'storeDetail']);
 */
 Route::get('/slideshow', [SlideshowController::class, 'index']);
 Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
+
+/*
+|--------------------------------------------------------------------------
+| Chat API Routes
+|--------------------------------------------------------------------------
+*/
+Route::post('/chat', [ChatController::class, 'store']);
+Route::get('/chat/{chat}', [ChatController::class, 'show']);

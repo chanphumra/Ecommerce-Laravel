@@ -15,6 +15,8 @@ import checkout from "../pages/checkout.vue";
 import clientRegister from "../auth/register.vue";
 import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
+import verifyresetpassword from "../auth/verifyresetpassword.vue";
+import resetPassword from '../auth/resetpassword.vue';
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
 import adminOrder from '../admin/pages/order.vue';
@@ -217,6 +219,24 @@ const routes = [
         }
     },
     {
+        path: '/verifyresetpassword/:email/:password',
+        component: verifyresetpassword,
+        name: 'verifyresetpassword',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
+    },
+    {
+        path: '/resetpassword',
+        component: resetPassword,
+        name: 'resetpassword',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
+    },
+    {
         path: '/:notFound(.*)*',
         component: notFound,
         meta: {
@@ -243,6 +263,7 @@ router.beforeEach((to, from, next) => {
        
     /*========== userAuth ==========*/
     else{
+        sessionStorage.removeItem("adminToken");
         if(to.meta.userAuth && !sessionStorage.getItem('token') && !localStorage.getItem('token')){
             sessionStorage.removeItem("adminToken");
             next('/login');

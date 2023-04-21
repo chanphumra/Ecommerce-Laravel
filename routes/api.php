@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/slideshow', [SlideshowController::class, 'store']);
     Route::put('/slideshow/{slideshow}', [SlideshowController::class, 'update']);
     Route::delete('/slideshow/{slideshow}', [SlideshowController::class, 'destroy']);
+
+    Route::put('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'update']);
 });
 
 /*

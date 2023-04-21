@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideshowController;
+use App\Http\Controllers\ProfilesettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,3 +81,10 @@ Route::get('/product/{product}', [ProductController::class, 'show']);
 */
 Route::get('/slideshow', [SlideshowController::class, 'index']);
 Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
+/*
+|--------------------------------------------------------------------------
+| Site Profile API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/profile_setting', [ProfilesettingController::class, 'index']);
+Route::get('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'show']);

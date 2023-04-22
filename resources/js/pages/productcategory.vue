@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from '@vue/reactivity';
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const ITEM_PER_PAGE = 20;
@@ -16,11 +16,20 @@ let cart = reactive(JSON.parse(localStorage.getItem('carts')) || {
     total: 0
 });
 const route = useRoute();
+const categoryId =  ref(route.params.id);
 
 onMounted(async () => {
     getCategory();
 });
 
+let interval = setInterval(() => {
+    categoryId.value = route.params.id;
+    if(!route.params.id) clearInterval(interval);
+}, 100);
+
+watch(categoryId, () => {
+    getCategory();
+});
 
 let productPerPage = computed(() => {
     let product = [];

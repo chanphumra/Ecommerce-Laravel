@@ -44,7 +44,7 @@ const getCategory = async () => {
 
 function productCategory(id) {
     openCategory.value = false;
-    router.push(`/productcategory/${id}`).then(() => {router.go()});
+    router.push(`/productcategory/${id}`);
 }
 
 </script>

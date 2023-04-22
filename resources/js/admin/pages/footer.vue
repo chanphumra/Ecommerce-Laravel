@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 
 let token = ref('');
 let form = ref({
@@ -35,7 +35,7 @@ onMounted(async () => {
 const getFooter = async () => {
     const respone = await axios.get('/api/footer');
 
-    if(respone.status == 200){
+    if (respone.status == 200) {
         const data1 = respone.data.result[0];
         const data2 = respone.data.result[1];
         const data3 = respone.data.result[2];
@@ -107,10 +107,9 @@ const updateFooter = async () => {
         },
     ];
 
-
     for (let index = 0; index < datas.length; index++) {
         const data = datas[index];
-        
+
         const formData = new FormData();
         formData.append('id', data.id);
         formData.append('description', data.description);
@@ -127,31 +126,30 @@ const updateFooter = async () => {
                 'Accept': 'application/json'
             }
         }).then(res => {
-            console.log(res)
-            if (res.status == 200) Swal.fire({
-                toast: true,
-                position: 'top',
-                showClass: {
-                    icon: 'animated heartBeat delay-1s'
-                },
-                icon: 'success',
-                text: 'Footer has been updated',
-                showConfirmButton: false,
-                timer: 1000
-            }).then(r => {
-                // router.push('/admin/show_slideshow');
-            });
+            console.log(res);
         }).catch(err => {
             console.log(err);
         });
     }
+    Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'success',
+        text: 'Footer has been updated',
+        showConfirmButton: false,
+        timer: 1000
+    })
 };
 </script>
 <template>
     <div class='lg:py-7 lg:px-10 p-5'>
         <div class="flex justify-between items-end">
             <h1 class='text-3xl font-bold text-black_500'>Footer Setting</h1>
-            <button @click="updateFooter()" class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Save Change</button>
+            <button @click="updateFooter()" class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Save
+                Change</button>
         </div>
         <div class="grid grid-cols md:grid-cols-2 mt-8 gap-4">
             <div class='p-4 bg-white rounded-lg shadow-md'>
@@ -212,7 +210,7 @@ const updateFooter = async () => {
             <div class='p-4 bg-white rounded-lg shadow-md'>
                 <h1 class='text-lg font-semibold mb-4'>Column 4</h1>
                 <p class='text-base'>Title</p>
-                <input  v-model="form.title4" type="text" class='input w-full mt-2' />
+                <input v-model="form.title4" type="text" class='input w-full mt-2' />
                 <div class="flex gap-4">
                     <div class='w-full'>
                         <p class='text-base mt-2'>Text1</p>

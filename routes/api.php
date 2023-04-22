@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideshowController;
+use App\Http\Controllers\ProfilesettingController;
+use App\Http\Controllers\FooterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::put('/slideshow/{slideshow}', [SlideshowController::class, 'update']);
     Route::delete('/slideshow/{slideshow}', [SlideshowController::class, 'destroy']);
     Route::put('/slideshow/updateEnable/{slideshow}', [SlideshowController::class, 'updateEnable']);
+
+    Route::put('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'update']);
+
+    Route::put('/footer', [FooterController::class, 'update']);
 });
 
 /*
@@ -98,8 +103,15 @@ Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
 
 /*
 |--------------------------------------------------------------------------
-| Chat API Routes
+| Site Profile API Routes
 |--------------------------------------------------------------------------
 */
-Route::post('/chat', [ChatController::class, 'store']);
-Route::get('/chat/{chat}', [ChatController::class, 'show']);
+Route::get('/profile_setting', [ProfilesettingController::class, 'index']);
+Route::get('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'show']);
+
+/*
+|--------------------------------------------------------------------------
+| Footer API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/footer', [FooterController::class, 'index']);

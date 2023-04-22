@@ -1,11 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import Profile from '../../setting/profile.js';
 
 const router = useRouter();
 let form = ref({
     email: '',
     password: ''
+});
+let profile = ref({});
+
+onMounted(async () => {
+    profile.value = await Profile;
 });
 
 function login() {
@@ -66,8 +72,8 @@ function login() {
         :style="'background-size: 100% 100%'">
         <div class="bg-black bg-opacity-20 flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
             <Link to='/' class="flex items-center mb-6 text-2xl font-semibold text-white">
-            <img class="w-8 h-8 mr-2" src="" alt="logo" />
-            {name}
+                <img class="w-8 h-8 mr-2" :src="profile.image" alt="logo" />
+                {{profile.name}}
             </Link>
             <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">

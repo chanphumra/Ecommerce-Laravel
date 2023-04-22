@@ -33,6 +33,7 @@ import addslideshow from '../admin/pages/addslideshow.vue';
 import slideshow from '../admin/pages/slideshow.vue';
 import editslideshow from '../admin/pages/editslideshow.vue';
 import siteprofile from '../admin/pages/siteprofile.vue'
+import footer from '../admin/pages/footer.vue'
 
 const routes = [
     {
@@ -175,6 +176,11 @@ const routes = [
                 path : '/admin/site_profile',
                 component : siteprofile, 
                 name: 'site_profile'
+            },
+            {
+                path : '/admin/footer',
+                component : footer, 
+                name: 'footer'
             },
         ],
         meta: {

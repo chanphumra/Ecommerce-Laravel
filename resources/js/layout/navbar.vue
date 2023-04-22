@@ -23,8 +23,8 @@ const menu = [
     },
     {
         title: 'Contact Us',
-        path: '/contact_us',
-        page_name: 'contact_us',
+        path: '/contact',
+        page_name: 'contact',
     },
     {
         title: 'About Us',

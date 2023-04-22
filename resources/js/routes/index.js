@@ -12,6 +12,7 @@ import productdetail from "../pages/productdetail.vue";
 import productcategory from "../pages/productcategory.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
+import contact from "../pages/contact.vue";
 import clientRegister from "../auth/register.vue";
 import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
@@ -44,6 +45,11 @@ const routes = [
                 path : '/',
                 component : home, 
                 name: 'home'
+            },
+            {
+                path : '/contact',
+                component : contact, 
+                name: 'contact'
             },
             {
                 path : '/cart',

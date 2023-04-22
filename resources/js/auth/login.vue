@@ -119,7 +119,7 @@ function login() {
                             <div class="flex gap-2 items-center">
                                 <input v-model="form.remember" type="checkbox" id="remember"
                                     class="accent-current border border-solid border-gray-300 rounded-sm cursor-pointer focus:ring-primary" />
-                                <label htmlFor="remember" class="cursor-pointer text-sm"> Remember me</label>
+                                <label for="remember" class="cursor-pointer text-sm"> Remember me</label>
                             </div>
                             <RouterLink to='/resetpassword'
                                 class="text-sm font-medium text-primary cursor-pointer hover:underline">Forgot password?

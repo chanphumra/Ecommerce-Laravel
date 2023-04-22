@@ -23,10 +23,6 @@ function handle(value) {
             <h1 class='font-semibold text-xl lg:text-2xl text-gray-500'>{{ profile.name }}</h1>
         </div>
         <div class='flex gap-4 items-center'>
-            <div
-                class='border border-solid border-gray-300 w-10 h-10 rounded-full object-cover cursor-pointer bg-body flex items-center justify-center'>
-                <div class='text-lg font-semibold cursor-pointer text-gray-500'></div>
-            </div>
             <img src="" alt="" class='w-10 h-10 rounded-full object-cover cursor-pointer' />
         </div>
     </div>

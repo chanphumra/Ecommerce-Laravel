@@ -3,6 +3,8 @@ import { computed } from '@vue/reactivity';
 import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+const route = useRoute();
+const categoryId = ref(route.params.id);
 const ITEM_PER_PAGE = 20;
 let page = ref(0);
 let activePage = ref(1);
@@ -15,8 +17,6 @@ let cart = reactive(JSON.parse(localStorage.getItem('carts')) || {
     discount_price: 0,
     total: 0
 });
-const route = useRoute();
-const categoryId =  ref(route.params.id);
 
 onMounted(async () => {
     getCategory();
@@ -24,11 +24,12 @@ onMounted(async () => {
 
 let interval = setInterval(() => {
     categoryId.value = route.params.id;
-    if(!route.params.id) clearInterval(interval);
+    if (!route.params.id) clearInterval(interval);
 }, 100);
 
 watch(categoryId, () => {
     getCategory();
+    activePage.value = 1;
 });
 
 let productPerPage = computed(() => {
@@ -202,5 +203,6 @@ function setIcon(icon) {
                     </nav>
                 </div>
             </div>
+        </div>
     </div>
-</div></template>
+</template>

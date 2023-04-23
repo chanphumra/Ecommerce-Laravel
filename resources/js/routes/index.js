@@ -8,6 +8,7 @@ import cart from "../pages/cart.vue";
 import products from "../pages/product.vue";
 import productdetail from "../pages/productdetail.vue";
 import productcategory from "../pages/productcategory.vue";
+import aboutusClient from "../pages/aboutus.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
 import clientRegister from "../auth/register.vue";
@@ -28,6 +29,10 @@ import slideshow from '../admin/pages/slideshow.vue';
 import editslideshow from '../admin/pages/editslideshow.vue';
 import siteprofile from '../admin/pages/siteprofile.vue'
 import footer from '../admin/pages/footer.vue'
+import addaboutus from '../admin/pages/addaboutus.vue';
+import aboutus from '../admin/pages/aboutus.vue';
+import editaboutus from '../admin/pages/editaboutus.vue';
+
 
 const routes = [
     {
@@ -58,6 +63,11 @@ const routes = [
                 path : '/productcategory/:id',
                 component : productcategory, 
                 name: 'productcategory'
+            },
+            {
+                path : '/about_us',
+                component : aboutusClient, 
+                name: 'about_us'
             },
             {
                 path : '/shippinginfo',
@@ -147,6 +157,21 @@ const routes = [
                 path : '/admin/footer',
                 component : footer, 
                 name: 'footer'
+            },
+            {
+                path : '/admin/add_aboutus',
+                component : addaboutus, 
+                name: 'add_aboutus'
+            },
+            {
+                path : '/admin/show_aboutus',
+                component : aboutus, 
+                name: 'show_aboutus'
+            },
+            {
+                path : '/admin/edit_aboutus/:id',
+                component : editaboutus, 
+                name: 'edit_aboutus'
             },
         ],
         meta: {

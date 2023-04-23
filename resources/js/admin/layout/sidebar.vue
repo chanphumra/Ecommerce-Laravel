@@ -109,9 +109,27 @@ const menus = [
                 title: 'Footer',
                 path: '/admin/footer',
                 page_name: 'footer',
-            }
+            },
+            
         ],
         icon: "settings.svg",
+        hasSub: true
+    },
+    {
+        title: "About us",
+        children: [
+            {
+                title: 'Add Developer',
+                path: '/admin/add_aboutus',
+                page_name: 'add_aboutus',
+            },
+            {
+                title: 'Developers',
+                path: '/admin/show_aboutus',
+                page_name: 'show_aboutus',
+            }
+        ],
+        icon: "monitor.svg",
         hasSub: true
     },
 ];

@@ -22,7 +22,7 @@ const getSlideshow = async () => {
 
 <template>
     <div class="mycontainer m-auto mt-4 py-0 rounded-lg overflow-hidden">
-        <swiper 
+        <swiper v-if="slideshows.length > 0"
             :style="{
                 '--swiper-navigation-color': '#42b883',
                 '--swiper-pagination-color': '#42b883',

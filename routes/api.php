@@ -64,6 +64,7 @@ Route::post('/auth/updatePassword/{email}', [AuthController::class, 'updatePassw
 |--------------------------------------------------------------------------
 */
 Route::post('/sendEmail', [MailController::class, 'sendEmail']);
+Route::post('/sendAdmin', [MailController::class, 'sendAdmin']);
 Route::post('/storeOTP', [MailController::class, 'storeOTP']);
 Route::delete('/deleteOTP/{email}', [MailController::class, 'deleteOTP']);
 

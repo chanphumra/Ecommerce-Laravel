@@ -59,11 +59,11 @@ function productCategory(id) {
                 </div>
             </div>
             <div v-if="openCategory"
-                class="absolute border border-gray-300 border-1 px-2 top-[125%] left-0 w-[280px] md:w-[600px] overflow-y-auto md:overflow-hidden h-[500px] md:h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 z-30 shadow-sm rounded-sm bg-white scroll-smooth scrollbar-thin scrollbar-track-gray-200 scrollbar-track-rounded-xl scrollbar-thumb-[#cfcfcf] scrollbar-thumb-rounded-xl">
+                class="absolute overflow-y-auto border h-[calc(100vh-200px)] md:max-h-none w-[250px] md:w-[500px] lg:w-[750px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 border-gray-300 border-1 px-2 top-[125%] left-0 z-30 shadow-sm rounded-sm bg-white scroll-smooth scrollbar-thin scrollbar-track-gray-200 scrollbar-track-rounded-xl scrollbar-thumb-[#cfcfcf] scrollbar-thumb-rounded-xl">
                 <div v-for="item in categories" @click="productCategory(item.id)"
-                    class="flex items-center gap-2 py-2 cursor-pointer rounded">
+                    class="flex items-center w-full gap-2 py-2 cursor-pointer overflow-hidden">
                     <img :src="item.image" alt="" class="w-6 h-6 object-cover">
-                    <p class="w-[170px] truncate">{{ item.name }}</p>
+                    <p>{{ item.name }}</p>
                 </div>
             </div>
         </div>

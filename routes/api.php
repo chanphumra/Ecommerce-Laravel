@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\ProfilesettingController;
 use App\Http\Controllers\FooterController;
+use App\Http\Controllers\AboutusController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::put('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'update']);
 
     Route::put('/footer', [FooterController::class, 'update']);
+
+    Route::post('/about_us', [AboutusController::class, 'store']);
+    Route::put('/about_us/{about_us}', [AboutusController::class, 'update']);
+    Route::delete('/about_us/{about_us}', [AboutusController::class, 'destroy']);
 });
 
 /*
@@ -116,3 +121,10 @@ Route::get('/profile_setting/{profile_setting}', [ProfilesettingController::clas
 |--------------------------------------------------------------------------
 */
 Route::get('/footer', [FooterController::class, 'index']);
+/*
+|--------------------------------------------------------------------------
+| About us API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/about_us', [AboutusController::class, 'index']);
+Route::get('/about_us/{about_us}', [AboutusController::class, 'show']);

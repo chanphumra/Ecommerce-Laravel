@@ -5,37 +5,37 @@ import { useRouter, RouterLink } from 'vue-router';
 
 let token = ref("");
 const router = useRouter();
-const header = ['SLIDESHOW TITLE', 'TEXT', 'LINK', 'PUBLISHED ON'];
+const header = ['Developer Name', 'Position', 'Description', 'PUBLISHED ON'];
 const ITEM_PER_PAGE = 5;
 let page = ref(0);
 let activePage = ref(1);
 
-let slideshows = ref([]);
+let developers = ref([]);
 
 onMounted(async () => {
-    getSlideshow();
+    getDeveloper();
     token.value = sessionStorage.getItem('adminToken') || '';
 });
 
-let slideshowByPage = computed(() => {
-    let slideshow = [];
-    for (let index = 0; index < slideshows.value.length; index++) {
+let developerByPage = computed(() => {
+    let developer = [];
+    for (let index = 0; index < developers.value.length; index++) {
         if (index >= (activePage.value - 1) * ITEM_PER_PAGE && index < activePage.value * ITEM_PER_PAGE)
-            slideshow.push(slideshows.value[index]);
+            developer.push(developers.value[index]);
     }
-    return slideshow;
+    return developer;
 });
 
-const getSlideshow = async () => {
-    const respone = await axios.get('/api/slideshow');
-    slideshows.value = respone.data.result.reverse();
-    page = Math.ceil(slideshows.value.length / ITEM_PER_PAGE);
+const getDeveloper = async () => {
+    const respone = await axios.get('/api/about_us');
+    developers.value = respone.data.result.reverse();
+    page = Math.ceil(developers.value.length / ITEM_PER_PAGE);
 }
 
-const deleteSlideshow = (id) => {
+const deleteDeveloper = (id) => {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You want to delete this slideshow!",
+        text: "You want to delete this developer!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
@@ -45,15 +45,15 @@ const deleteSlideshow = (id) => {
         reverseButtons: true
     }).then(async (result) => {
         if (result.isConfirmed) {
-            axios.delete("/api/slideshow/" + id, {
+            axios.delete("/api/about_us/" + id, {
                 headers: {
                     'Authorization': `Bearer ${token.value}`,
                     'Accept': 'application/json'
                 }
             }).then(res => {
                 if (res.status == 200) {
-                    getSlideshow();
-                    if ((slideshows.length - 1) % ITEM_PER_PAGE == 0) {
+                    getDeveloper();
+                    if ((developers.length - 1) % ITEM_PER_PAGE == 0) {
                         activePage = activePage - 1;
                     }
                     Swal.fire({
@@ -63,7 +63,7 @@ const deleteSlideshow = (id) => {
                             icon: 'animated heartBeat delay-1s'
                         },
                         icon: 'success',
-                        text: 'Slideshow has been delete!',
+                        text: 'Developer has been delete!',
                         showConfirmButton: false,
                         timer: 1000
                     });
@@ -71,35 +71,6 @@ const deleteSlideshow = (id) => {
             });
         }
     })
-}
-
-const updateEnable = (id, enable) => {
-    const formData = new FormData();
-    formData.append('enable', enable == 1 ? 0 : 1);
-    formData.append('_method', "PUT");
-    axios.post('/api/slideshow/updateEnable/' + id, formData, {
-        headers: {
-            'Authorization': `Bearer ${token.value}`,
-            'Accept': 'application/json'
-        }
-    }).then(res => {
-        if (res.data.success) {
-            Swal.fire({
-                toast: true,
-                position: 'top',
-                showClass: {
-                    icon: 'animated heartBeat delay-1s'
-                },
-                icon: 'success',
-                text: `Slideshow has been ${enable == 1 ? 'disable' : 'enable'}`,
-                showConfirmButton: false,
-                timer: 1000
-            });
-            getSlideshow();
-        }
-    }).catch(err => {
-        console.log(err);
-    });
 }
 
 function setIcon(icon) {
@@ -114,17 +85,17 @@ function Image(image) {
 
 <template>
     <div class='lg:py-7 lg:px-10 p-5'>
-        <h1 class='text-3xl font-bold text-black_500'>Slideshow</h1>
+        <h1 class='text-3xl font-bold text-black_500'>Developer</h1>
     </div>
     <div class="flex gap-4 flex-col md:flex-row lg:items-center justify-between px-5 lg:px-10 mb-4">
         <div class='relative'>
-            <input type="text" name="" id="" placeholder='Search slideshow'
+            <input type="text" name="" id="" placeholder='Search developer'
                 class='text-sm pl-10 w-full lg:w-[300px] h-[40px] rounded-md border-gray-300 border-solid border focus:border-current focus:ring-current' />
             <img :src="setIcon('search.svg')" alt="" class="absolute top-[50%] left-3 translate-y-[-50%] w-4 h-4" />
         </div>
-        <RouterLink to="/admin/add_slideshow">
+        <RouterLink to="/admin/add_aboutus">
             <button class='flex items-center gap-1 px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>
-                <img :src="setIcon('plus.svg')" alt="" />Add Slideshow
+                <img :src="setIcon('plus.svg')" alt="" />Add Developer
             </button>
         </RouterLink>
     </div>
@@ -145,7 +116,7 @@ function Image(image) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in slideshowByPage" class='group relative border-solid border-b border-gray-300'>
+                    <tr v-for="item in developerByPage" class='group relative border-solid border-b border-gray-300'>
                         <td class='text-sm text-gray-700 py-2 px-3'>
                             <input type="checkbox" name="" id=""
                                 class='w-4 h-4 border-solid border border-gray-500 rounded-[4px] checked:rounded-[4px]' />
@@ -155,14 +126,14 @@ function Image(image) {
                                 class='w-[45px] h-[45px] border-solid border border-gray-300 rounded-md object-cover' />
                             <p
                                 class='w-[230px] text-ph font-semibold truncate text-primary py-2 px-3 hover:underline cursor-pointer'>
-                                {{ item.title }}
+                                {{ item.name }}
                             </p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>
-                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.text }}</p>
+                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.position }}</p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>
-                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.link }}</p>
+                            <p class='w-[300px] text-ph font-semibold truncate py-2 px-3'>{{ item.description }}</p>
                         </td>
                         <td class='text-ph font-semibold text-gray-700 py-2 px-3'>{{ item.created_at }}</td>
                         <td class='text-lg w-4 text-gray-700 py-2 px-3 pr-5'>
@@ -174,18 +145,13 @@ function Image(image) {
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('check.svg')" alt="" class="w-[14px] h-[14px]">
                             </div>
-                            <div @click="updateEnable(item.id, item.enable)"
-                                class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
-                                <img :src="setIcon(item.enable == 1 ? 'eye.svg' : 'eye-off.svg')" alt=""
-                                    class="w-[14px] h-[14px]">
-                            </div>
-                            <RouterLink :to="'/admin/edit_slideshow/' + item.id">
+                            <RouterLink :to="'/admin/edit_aboutus/' + item.id">
                                 <div
                                     class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                     <img :src="setIcon('edit.svg')" alt="" class="w-[14px] h-[14px]">
                                 </div>
                             </RouterLink>
-                            <div @click="deleteSlideshow(item.id)"
+                            <div @click="deleteDeveloper(item.id)"
                                 class='inline-flex px-[10px] py-[6px] bg-body border-solid border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200'>
                                 <img :src="setIcon('trash.svg')" alt="" class="w-[14px] h-[14px]">
                             </div>
@@ -211,11 +177,11 @@ function Image(image) {
             <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-gray-700">Showing
-                        <span class="font-medium">{{ slideshows.length > 0 ? (activePage - 1) * ITEM_PER_PAGE + 1 :
+                        <span class="font-medium">{{ developers.length > 0 ? (activePage - 1) * ITEM_PER_PAGE + 1 :
                             0 }}</span> to
-                        <span class="font-medium">{{ (slideshows.length - (activePage - 1) * ITEM_PER_PAGE) > ITEM_PER_PAGE
-                            ? activePage * ITEM_PER_PAGE : slideshows.length }}</span> of
-                        <span class="font-medium">{{ slideshows.length }}</span> results
+                        <span class="font-medium">{{ (developers.length - (activePage - 1) * ITEM_PER_PAGE) > ITEM_PER_PAGE
+                            ? activePage * ITEM_PER_PAGE : developers.length }}</span> of
+                        <span class="font-medium">{{ developers.length }}</span> results
                     </p>
                 </div>
                 <div>

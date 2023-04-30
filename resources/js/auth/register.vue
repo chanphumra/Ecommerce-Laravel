@@ -134,19 +134,6 @@ async function nextStep() {
         timer: 1000
     });
 
-    const respone = await axios.post('/api/auth/exist', { email: form.value.email });
-    if (respone.data.exist) return Swal.fire({
-        toast: true,
-        position: 'top',
-        showClass: {
-            icon: 'animated heartBeat delay-1s'
-        },
-        icon: 'error',
-        text: 'Please register other email',
-        showConfirmButton: false,
-        timer: 1000
-    });
-
     if (form.value.password != form.value.confirm) {
         return Swal.fire({
             toast: true,
@@ -160,6 +147,19 @@ async function nextStep() {
             timer: 1000
         });
     }
+
+    const respone = await axios.post('/api/auth/exist', { email: form.value.email });
+    if (respone.data.exist) return Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'error',
+        text: 'Please register other email',
+        showConfirmButton: false,
+        timer: 1000
+    });
 
     firstStep.value = false;
 }

@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const header = ['PRODUCT NAME', 'PRICE', 'IN STOCK', 'DISCOUNT', 'CATEGORY', 'PUBLISHED ON'];
-const ITEM_PER_PAGE = 1;
+const ITEM_PER_PAGE = 5;
 let page = ref(0);
 let activePage = ref(1);
 let products = ref([]);
@@ -51,7 +51,7 @@ const deleteProduct = (id) => {
             }).then(res => {
                 if (res.status == 200) {
                     getProduct();
-                    if ((products.length - 1) % ITEM_PER_PAGE == 0) {
+                    if ((products.value.length - 1) % ITEM_PER_PAGE == 0) {
                         activePage = activePage - 1;
                     }
                     Swal.fire({

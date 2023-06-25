@@ -13,7 +13,8 @@ let form = ref({
     title: '',
     text: '',
     link: '',
-    image: ''
+    image: '',
+    enable: false
 });
 
 function previewImage() {
@@ -57,6 +58,7 @@ function saveSlideshow() {
     formData.append('text', form.value.text);
     formData.append('link', form.value.link);
     formData.append('image', form.value.image);
+    formData.append('enable', form.value.enable ? 1 : 0);
 
     axios.post("/api/slideshow/", formData, {
         headers: {
@@ -94,6 +96,10 @@ function saveSlideshow() {
             <div class='flex-[4]'>
                 <div class="flex justify-between">
                     <h1 class='text-xl font-semibold text-gray-800'>Title</h1>
+                    <div class="flex items-center gap-2">
+                        <input v-model="form.enable" type="checkbox" id="enable" class="accent-current border border-solid border-gray-300 rounded-sm cursor-pointer focus:ring-primary">
+                        <label for="enable">Enable</label>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <input type="text" name="" id="" class='input text-sm w-full' placeholder='Write title here...'

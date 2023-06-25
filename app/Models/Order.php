@@ -11,4 +11,12 @@ class Order extends Model
 
     protected $table = "orders";
     protected $guarded = ["id"];
+
+    public function details () {
+        return $this->hasMany(OrderDetail::class, 'o_id');
+    }
+
+    public function customer () {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

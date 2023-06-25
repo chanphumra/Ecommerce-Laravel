@@ -7,35 +7,21 @@ use Illuminate\Http\Request;
 
 class SlideshowController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
         $slideshow = Slideshow::all();
         return response()->json([
             "result" => $slideshow
         ], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $slideshow = new Slideshow();
         $slideshow->title = $request->title;
         $slideshow->text = $request->text;
         $slideshow->link = $request->link;
+        $slideshow->enable = $request->enable;
 
         if($request->hasFile('image')){
             $file = $request->file('image');
@@ -54,9 +40,6 @@ class SlideshowController extends Controller
         ],200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
@@ -67,17 +50,6 @@ class SlideshowController extends Controller
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Slideshow $slideshow)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $slideshow = Slideshow::find($id);
@@ -85,6 +57,7 @@ class SlideshowController extends Controller
             $slideshow->title = $request->title;
             $slideshow->text = $request->text;
             $slideshow->link = $request->link;
+            $slideshow->enable = $request->enable;
 
             if ($request->hasFile('image')) {
                 /*======= delete old image ======*/
@@ -109,9 +82,6 @@ class SlideshowController extends Controller
         ], 400);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $slideshow = Slideshow::find($id);
@@ -126,6 +96,23 @@ class SlideshowController extends Controller
             ], 200);
         }
         return response()->json([
+            "message" => "slideshow not found"
+        ], 400);
+    }
+
+    public function updateEnable(Request $request, string $id){
+        $slideshow = Slideshow::find($id);
+        if ($slideshow) {
+            $slideshow->enable = $request->enable;
+            $slideshow->save();
+
+            return response()->json([
+                "success" => true,
+                "message" => "updated"
+            ], 200);
+        }
+        return response()->json([
+            "success" => false,
             "message" => "slideshow not found"
         ], 400);
     }

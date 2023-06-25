@@ -5,17 +5,24 @@ import notFound from "../components/notFound.vue";
 import client from "../pages/public.vue";
 import home from "../pages/home.vue";
 import cart from "../pages/cart.vue";
+import clientOrder from "../pages/order.vue";
+import clientOrderDetail from "../pages/orderdetail.vue";
 import products from "../pages/product.vue";
 import productdetail from "../pages/productdetail.vue";
 import productcategory from "../pages/productcategory.vue";
 import aboutusClient from "../pages/aboutus.vue";
 import shippinginfo from "../pages/shippinginfo.vue";
 import checkout from "../pages/checkout.vue";
+import contact from "../pages/contact.vue";
 import clientRegister from "../auth/register.vue";
 import clientLogin from "../auth/login.vue";
 import verify from "../auth/verify.vue";
+import verifyresetpassword from "../auth/verifyresetpassword.vue";
+import resetPassword from '../auth/resetpassword.vue';
 /*=============== import admin route ================*/
 import admin from '../admin/pages/admin.vue';
+import adminOrder from '../admin/pages/order.vue';
+import adminOrderDetail from '../admin/pages/orderdatail.vue';
 import adminLogin from '../admin/auth/login.vue';
 import dashboard from '../admin/pages/dashboard.vue';
 import addcategory from '../admin/pages/addcategory.vue';
@@ -45,9 +52,32 @@ const routes = [
                 name: 'home'
             },
             {
+                path : '/contact',
+                component : contact, 
+                name: 'contact'
+            },
+            {
                 path : '/cart',
                 component : cart, 
                 name: 'cart'
+            },
+            {
+                path : '/order',
+                component : clientOrder, 
+                name: 'clientorder',
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
+            },
+            {
+                path : '/orderdetail/:id',
+                component : clientOrderDetail, 
+                name: 'clientorderdetail',
+                meta: {
+                    adminAuth: false,
+                    userAuth: true,
+                }
             },
             {
                 path : '/product',
@@ -102,6 +132,16 @@ const routes = [
                 path : '/admin',
                 component : dashboard, 
                 name: 'dashboard'
+            },
+            {
+                path : '/admin/orders',
+                component : adminOrder, 
+                name: 'orders'
+            },
+            {
+                path : '/admin/ordersdetail/:id',
+                component : adminOrderDetail, 
+                name: 'orderdetail'
             },
             {
                 path : '/admin/add_category',
@@ -216,6 +256,24 @@ const routes = [
         }
     },
     {
+        path: '/verifyresetpassword/:email/:password',
+        component: verifyresetpassword,
+        name: 'verifyresetpassword',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
+    },
+    {
+        path: '/resetpassword',
+        component: resetPassword,
+        name: 'resetpassword',
+        meta: {
+            adminAuth: false,
+            userAuth: false
+        }
+    },
+    {
         path: '/:notFound(.*)*',
         component: notFound,
         meta: {
@@ -242,6 +300,7 @@ router.beforeEach((to, from, next) => {
        
     /*========== userAuth ==========*/
     else{
+        sessionStorage.removeItem("adminToken");
         if(to.meta.userAuth && !sessionStorage.getItem('token') && !localStorage.getItem('token')){
             sessionStorage.removeItem("adminToken");
             next('/login');

@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Profile from '../setting/profile.js';
 const router = useRouter();
 
 let firstStep = ref(true);
@@ -11,6 +12,11 @@ let form = ref({
     confirm: '',
     image: '',
     otp: '',
+});
+let profile = ref({});
+
+onMounted(async () => {
+    profile.value = await Profile;
 });
 
 const saveUser = () => {
@@ -128,19 +134,6 @@ async function nextStep() {
         timer: 1000
     });
 
-    const respone = await axios.post('/api/auth/exist', { email: form.value.email });
-    if (respone.data.exist) return Swal.fire({
-        toast: true,
-        position: 'top',
-        showClass: {
-            icon: 'animated heartBeat delay-1s'
-        },
-        icon: 'error',
-        text: 'Please register other email',
-        showConfirmButton: false,
-        timer: 1000
-    });
-
     if (form.value.password != form.value.confirm) {
         return Swal.fire({
             toast: true,
@@ -155,6 +148,19 @@ async function nextStep() {
         });
     }
 
+    const respone = await axios.post('/api/auth/exist', { email: form.value.email });
+    if (respone.data.exist) return Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'error',
+        text: 'Please register other email',
+        showConfirmButton: false,
+        timer: 1000
+    });
+
     firstStep.value = false;
 }
 
@@ -166,8 +172,8 @@ async function nextStep() {
         :style="'background-size: 100% 100%'">
         <div class="bg-black bg-opacity-20 flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-white">
-                <img class="w-8 h-8 mr-2" src="" alt="logo" />
-                {name}
+                <img class="w-8 h-8 mr-2" :src="profile.image" alt="logo" />
+                {{profile.name}}
             </a>
             <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -217,8 +223,8 @@ async function nextStep() {
         :style="'background-size: 100% 100%'">
         <div class="bg-black bg-opacity-20 flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
             <div class="flex items-center mb-6 text-2xl font-semibold text-white">
-                <img class="w-8 h-8 mr-2" src="" alt="logo" />
-                {name}
+                <img class="w-8 h-8 mr-2" :src="profile.image" alt="logo" />
+                {{profile.name}}
             </div>
             <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">

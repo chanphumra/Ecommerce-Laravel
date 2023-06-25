@@ -45,19 +45,6 @@ const deleteDeveloper = (id) => {
         reverseButtons: true
     }).then(async (result) => {
         if (result.isConfirmed) {
-            const res = await axios.get("/api/about_us/" + id);
-            if (res.data.result.length > 0)
-                return Swal.fire({
-                    toast: true,
-                    position: 'top',
-                    showClass: {
-                        icon: 'animated heartBeat delay-1s'
-                    },
-                    icon: 'warning',
-                    text: 'Developer not empty!',
-                    showConfirmButton: false,
-                    timer: 1000
-                });
             axios.delete("/api/about_us/" + id, {
                 headers: {
                     'Authorization': `Bearer ${token.value}`,

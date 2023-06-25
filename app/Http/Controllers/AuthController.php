@@ -91,4 +91,17 @@ class AuthController extends Controller
             "message" => "Incorrect OTP"
         ], 200);
     }
+
+    public function updatePassword(Request $request, string $email){
+        $user = User::where('email', $email)->get()->first();
+        if($user){
+            $user->password = Hash::make($request->newpassword);
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                "message" => "Update success"
+            ], 200);
+        }
+    }
 }

@@ -1,16 +1,18 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import navbar from './navbar.vue';
 import { RouterLink, useRouter } from 'vue-router';
+import Profile from '../setting/profile.js'
 const router = useRouter();
 
 let countCart = ref(0);
 let login = ref(false);
 let token = ref("");
 let user = ref({});
+let profile = ref({});
 
 onMounted(async () => {
-
+    profile.value = await Profile;
     if (localStorage.getItem('token') || sessionStorage.getItem('token')) {
         login.value = true;
         token.value = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -47,6 +49,10 @@ setInterval(() => {
     };
     countCart.value = cart.products.length;
 }, 0);
+
+function yourOrder() {
+    router.push('/order');
+}
 </script>
 
 <template>
@@ -57,9 +63,9 @@ setInterval(() => {
             <RouterLink :to="'/'">
                 <div class="flex items-center gap-4">
                     <div class="logo w-[40px]">
-                        <img src="/icons/vue.png" alt="" class='w-full h-[40px] object-cover' />
+                        <img :src="profile.image" alt="" class='w-full h-[40px] object-cover' />
                     </div>
-                    <p class='text-gray-700 font-semibold text-xl md:text-2xl'>Bazaar Shop</p>
+                    <p class='text-gray-700 font-semibold text-xl md:text-2xl'>{{profile.name}}</p>
                 </div>
             </RouterLink>
 
@@ -88,12 +94,11 @@ setInterval(() => {
                             class='fa fa-user w-10 h-10 md:w-[46px] md:h-[46px] bg-[#f3f5f9] rounded-full text-center leading-10 md:leading-[46px] cursor-pointer object-cover' />
                         <p class='text-base font-semibold truncate'>{{ user.name }}</p>
                         <div class="flex gap-2 items-center mt-5 cursor-pointer hover:underline">
-                            <BiUser class='text-lg ' />
-                            <p class='text-sm
-                                    font-semibold text-gray-800'>Profile</p>
+                            <i class="fas fa-user text-sm text-gray-700"></i>
+                            <p class='text-sm font-semibold text-gray-800'>Profile</p>
                         </div>
-                        <div class="flex gap-2 items-center mt-3 cursor-pointer hover:underline">
-                            <BsBag class='text-lg font-semibold' />
+                        <div class="flex gap-2 items-center mt-3 cursor-pointer hover:underline" @click="yourOrder()">
+                            <i class="fas fa-shopping-bag text-sm text-gray-700"></i>
                             <p class='text-sm font-semibold text-gray-800'>Orders</p>
                         </div>
                         <div class="border-t border-solid border-gray-300 mt-7">

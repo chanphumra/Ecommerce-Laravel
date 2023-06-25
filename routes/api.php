@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\ProfilesettingController;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// test vathana
+//hahha
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -35,10 +36,12 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/product', [ProductController::class, 'store']);
     Route::put('/product/{product}', [ProductController::class, 'update']);
     Route::delete('/product/{product}', [ProductController::class, 'destroy']);
+    Route::put('/product/clearStock/{product}', [ProductController::class, 'clearStock']);
 
     Route::post('/slideshow', [SlideshowController::class, 'store']);
     Route::put('/slideshow/{slideshow}', [SlideshowController::class, 'update']);
     Route::delete('/slideshow/{slideshow}', [SlideshowController::class, 'destroy']);
+    Route::put('/slideshow/updateEnable/{slideshow}', [SlideshowController::class, 'updateEnable']);
 
     Route::put('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'update']);
 
@@ -59,6 +62,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/auth/exist', [AuthController::class, 'exist']);
 Route::post('/auth/verify', [AuthController::class, 'verify']);
+Route::post('/auth/updatePassword/{email}', [AuthController::class, 'updatePassword']);
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +70,7 @@ Route::post('/auth/verify', [AuthController::class, 'verify']);
 |--------------------------------------------------------------------------
 */
 Route::post('/sendEmail', [MailController::class, 'sendEmail']);
+Route::post('/sendAdmin', [MailController::class, 'sendAdmin']);
 Route::post('/storeOTP', [MailController::class, 'storeOTP']);
 Route::delete('/deleteOTP/{email}', [MailController::class, 'deleteOTP']);
 
@@ -87,11 +92,22 @@ Route::get('/product/{product}', [ProductController::class, 'show']);
 
 /*
 |--------------------------------------------------------------------------
+| Order API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/order', [OrderController::class, 'index']);
+Route::get('/order/{order}', [OrderController::class, 'show']);
+Route::post('/order/store', [OrderController::class, 'store']);
+Route::post('/order/storeDetail', [OrderController::class, 'storeDetail']);
+
+/*
+|--------------------------------------------------------------------------
 | Slideshow API Routes
 |--------------------------------------------------------------------------
 */
 Route::get('/slideshow', [SlideshowController::class, 'index']);
 Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
+
 /*
 |--------------------------------------------------------------------------
 | Site Profile API Routes
@@ -99,6 +115,7 @@ Route::get('/slideshow/{slideshow}', [SlideshowController::class, 'show']);
 */
 Route::get('/profile_setting', [ProfilesettingController::class, 'index']);
 Route::get('/profile_setting/{profile_setting}', [ProfilesettingController::class, 'show']);
+
 /*
 |--------------------------------------------------------------------------
 | Footer API Routes

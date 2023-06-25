@@ -14,15 +14,16 @@ class ProfilesettingController extends Controller
             "result" => $profile_setting
         ], 200);
     }
+
     public function show(string $id)
     {
-        //
         $profile_setting = Profilesetting::find($id);
         
         return response()->json([
             "result" => $profile_setting
         ], 200);
     }
+
     public function update(Request $request, string $id)
     {
         $profile_setting = Profilesetting::find($id);

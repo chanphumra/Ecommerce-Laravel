@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 
 let token = ref('');
 let form = ref({
@@ -35,7 +35,7 @@ onMounted(async () => {
 const getFooter = async () => {
     const respone = await axios.get('/api/footer');
 
-    if(respone.status == 200){
+    if (respone.status == 200) {
         const data1 = respone.data.result[0];
         const data2 = respone.data.result[1];
         const data3 = respone.data.result[2];
@@ -107,10 +107,9 @@ const updateFooter = async () => {
         },
     ];
 
-
     for (let index = 0; index < datas.length; index++) {
         const data = datas[index];
-        
+
         const formData = new FormData();
         formData.append('id', data.id);
         formData.append('description', data.description);
@@ -127,110 +126,109 @@ const updateFooter = async () => {
                 'Accept': 'application/json'
             }
         }).then(res => {
-            console.log(res)
-            if (res.status == 200) Swal.fire({
-                toast: true,
-                position: 'top',
-                showClass: {
-                    icon: 'animated heartBeat delay-1s'
-                },
-                icon: 'success',
-                text: 'Footer has been updated',
-                showConfirmButton: false,
-                timer: 1000
-            }).then(r => {
-                // router.push('/admin/show_slideshow');
-            });
+            console.log(res);
         }).catch(err => {
             console.log(err);
         });
     }
+    Swal.fire({
+        toast: true,
+        position: 'top',
+        showClass: {
+            icon: 'animated heartBeat delay-1s'
+        },
+        icon: 'success',
+        text: 'Footer has been updated',
+        showConfirmButton: false,
+        timer: 1000
+    })
 };
 </script>
 <template>
-    <div className='lg:py-7 lg:px-10 p-5'>
-        <div className="flex justify-between items-end">
-            <h1 className='text-3xl font-bold text-black_500'>Footer Setting</h1>
-            <button @click="updateFooter()" className='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Save Change</button>
+    <div class='lg:py-7 lg:px-10 p-5'>
+        <div class="flex justify-between items-end">
+            <h1 class='text-3xl font-bold text-black_500'>Footer Setting</h1>
+            <button @click="updateFooter()" class='px-4 py-2 rounded-md bg-primary text-white text-sm cursor-pointer'>Save
+                Change</button>
         </div>
-        <div className="grid grid-cols md:grid-cols-2 mt-8 gap-4">
-            <div className='p-4 bg-white rounded-lg shadow-md'>
-                <h1 className='text-lg font-semibold mb-4'>Column 1</h1>
-                <p className='text-base'>Description</p>
-                <input v-model="form.description" type="text" className='input w-full mt-2' />
+        <div class="grid grid-cols md:grid-cols-2 mt-8 gap-4">
+            <div class='p-4 bg-white rounded-lg shadow-md'>
+                <h1 class='text-lg font-semibold mb-4'>Column 1</h1>
+                <p class='text-base'>Description</p>
+                <input v-model="form.description" type="text" class='input w-full mt-2' />
             </div>
-            <div className='p-4 bg-white rounded-lg shadow-md'>
-                <h1 className='text-lg font-semibold mb-4'>Column 2</h1>
-                <p className='text-base'>Title</p>
-                <input v-model="form.title2" type="text" className='input w-full mt-2' />
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text1</p>
-                        <input v-model="form.text2_1" type="text" className='input w-full mt-2' />
+            <div class='p-4 bg-white rounded-lg shadow-md'>
+                <h1 class='text-lg font-semibold mb-4'>Column 2</h1>
+                <p class='text-base'>Title</p>
+                <input v-model="form.title2" type="text" class='input w-full mt-2' />
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text1</p>
+                        <input v-model="form.text2_1" type="text" class='input w-full mt-2' />
                     </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text2</p>
-                        <input v-model="form.text2_2" type="text" className='input w-full mt-2' />
-                    </div>
-                </div>
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text3</p>
-                        <input v-model="form.text2_3" type="text" className='input w-full mt-2' />
-                    </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text4</p>
-                        <input v-model="form.text2_4" type="text" className='input w-full mt-2' />
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text2</p>
+                        <input v-model="form.text2_2" type="text" class='input w-full mt-2' />
                     </div>
                 </div>
-            </div>
-            <div className='p-4 bg-white rounded-lg shadow-md'>
-                <h1 className='text-lg font-semibold mb-4'>Column 3</h1>
-                <p className='text-base'>Title</p>
-                <input v-model="form.title3" type="text" className='input w-full mt-2' />
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text1</p>
-                        <input v-model="form.text3_1" type="text" className='input w-full mt-2' />
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text3</p>
+                        <input v-model="form.text2_3" type="text" class='input w-full mt-2' />
                     </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text2</p>
-                        <input v-model="form.text3_2" type="text" className='input w-full mt-2' />
-                    </div>
-                </div>
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text3</p>
-                        <input v-model="form.text3_3" type="text" className='input w-full mt-2' />
-                    </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text4</p>
-                        <input v-model="form.text3_4" type="text" className='input w-full mt-2' />
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text4</p>
+                        <input v-model="form.text2_4" type="text" class='input w-full mt-2' />
                     </div>
                 </div>
             </div>
-            <div className='p-4 bg-white rounded-lg shadow-md'>
-                <h1 className='text-lg font-semibold mb-4'>Column 4</h1>
-                <p className='text-base'>Title</p>
-                <input  v-model="form.title4" type="text" className='input w-full mt-2' />
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text1</p>
-                        <input v-model="form.text4_1" type="text" className='input w-full mt-2' />
+            <div class='p-4 bg-white rounded-lg shadow-md'>
+                <h1 class='text-lg font-semibold mb-4'>Column 3</h1>
+                <p class='text-base'>Title</p>
+                <input v-model="form.title3" type="text" class='input w-full mt-2' />
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text1</p>
+                        <input v-model="form.text3_1" type="text" class='input w-full mt-2' />
                     </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text2</p>
-                        <input v-model="form.text4_2" type="text" className='input w-full mt-2' />
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text2</p>
+                        <input v-model="form.text3_2" type="text" class='input w-full mt-2' />
                     </div>
                 </div>
-                <div className="flex gap-4">
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text3</p>
-                        <input v-model="form.text4_3" type="text" className='input w-full mt-2' />
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text3</p>
+                        <input v-model="form.text3_3" type="text" class='input w-full mt-2' />
                     </div>
-                    <div className='w-full'>
-                        <p className='text-base mt-2'>Text4</p>
-                        <input v-model="form.text4_4" type="text" className='input w-full mt-2' />
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text4</p>
+                        <input v-model="form.text3_4" type="text" class='input w-full mt-2' />
+                    </div>
+                </div>
+            </div>
+            <div class='p-4 bg-white rounded-lg shadow-md'>
+                <h1 class='text-lg font-semibold mb-4'>Column 4</h1>
+                <p class='text-base'>Title</p>
+                <input v-model="form.title4" type="text" class='input w-full mt-2' />
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text1</p>
+                        <input v-model="form.text4_1" type="text" class='input w-full mt-2' />
+                    </div>
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text2</p>
+                        <input v-model="form.text4_2" type="text" class='input w-full mt-2' />
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text3</p>
+                        <input v-model="form.text4_3" type="text" class='input w-full mt-2' />
+                    </div>
+                    <div class='w-full'>
+                        <p class='text-base mt-2'>Text4</p>
+                        <input v-model="form.text4_4" type="text" class='input w-full mt-2' />
                     </div>
                 </div>
             </div>

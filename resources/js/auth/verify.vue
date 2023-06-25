@@ -227,3 +227,8 @@ function Verify() {
         </div>
     </section>
 </template>
+<style>
+.swal2-loader {
+    border-color: #42b883 transparent #42b883 transparent;
+}
+</style>

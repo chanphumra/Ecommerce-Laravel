@@ -16,8 +16,8 @@ return new class extends Migration
             $table->bigInteger('o_id')->unsigned();
             $table->bigInteger('p_id')->unsigned();
             $table->integer('qty');
-            $table->foreign('o_id')->references('id')->on('product')->onDelete('cascade');
-            $table->foreign('p_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('p_id')->references('id')->on('product')->onDelete('cascade');
+            $table->foreign('o_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate();
         });

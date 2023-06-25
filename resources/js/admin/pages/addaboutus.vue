@@ -71,7 +71,7 @@ function saveAboutUs() {
                 icon: 'animated heartBeat delay-1s'
             },
             icon: 'success',
-            text: 'About us has been saved',
+            text: 'Developer has been saved',
             showConfirmButton: false,
             timer: 1000
         }).then(r => {
@@ -99,7 +99,7 @@ function saveAboutUs() {
                     <input type="text" name="" id="" class='input text-sm w-full' placeholder='Write name here...'
                         v-model="form.name" />
                 </div>
-                <div class="flex justify-between">
+                <div class="mt-7 flex justify-between">
                     <h1 class='text-xl font-semibold text-gray-800'>Position</h1>
                 </div>
                 <div class="mt-3">

@@ -1,9 +1,11 @@
 <script setup>
 import { computed } from '@vue/reactivity';
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-const ITEM_PER_PAGE = 1;
+const route = useRoute();
+const categoryId = ref(route.params.id);
+const ITEM_PER_PAGE = 20;
 let page = ref(0);
 let activePage = ref(1);
 let openId = ref(0);
@@ -15,10 +17,19 @@ let cart = reactive(JSON.parse(localStorage.getItem('carts')) || {
     discount_price: 0,
     total: 0
 });
-const router = useRoute();
 
 onMounted(async () => {
     getCategory();
+});
+
+let interval = setInterval(() => {
+    categoryId.value = route.params.id;
+    if (!route.params.id) clearInterval(interval);
+}, 100);
+
+watch(categoryId, () => {
+    getCategory();
+    activePage.value = 1;
 });
 
 let productPerPage = computed(() => {
@@ -31,7 +42,7 @@ let productPerPage = computed(() => {
 });
 
 const getCategory = async () => {
-    const respone = await axios.get('/api/category/' + router.params.id);
+    const respone = await axios.get('/api/category/' + route.params.id);
     category.value = respone.data.result;
     products.value = respone.data.result.products;
     page = Math.ceil(products.value.length / ITEM_PER_PAGE);
@@ -192,5 +203,6 @@ function setIcon(icon) {
                     </nav>
                 </div>
             </div>
+        </div>
     </div>
-</div></template>
+</template>

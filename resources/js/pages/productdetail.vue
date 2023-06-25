@@ -62,7 +62,7 @@ function addToCart() {
 </script>
 
 <template>
-    <p class="mycontainer py-0 mt-4 text-[15px] text-primary"><span class="hover:underline font-semibold cursor-pointer">{{ product.category.name }}</span> > <span class="hover:underline cursor-pointer">{{product.name}}</span></p>
+    <p class="mycontainer py-0 mt-4 text-xs text-primary"><RouterLink :to="'/productcategory/' + product.category.id"><span class="hover:underline font-bold cursor-pointer">{{ product.category.name }}</span></RouterLink> <span class="text-gray-700">></span> <span class="font-semibold">{{product.name}}</span></p>
     <div class='mycontainer flex flex-col lg:flex-row gap-5 lg:gap-0'>
         <div class="flex flex-col gap-5 w-full">
             <div class="flex flex-col lg:flex-row gap-5 w-full">
@@ -83,7 +83,7 @@ function addToCart() {
             <div class="flex justify-between items-center w-full lg:w-[550px] gap-5">
                 <button
                     class='flex justify-center items-center gap-2 w-full text-sm font-semibold rounded-full py-3 text-primary hover:text-white bg-transparent hover:bg-primary border border-solid border-primary'>
-                    <BiHeart class='w-[18px] h-[18px]' />
+                    <i class="fas fa-heart"></i>
                     <p>Add to wishlist</p>
                 </button>
                 <button @click="addToCart()" class='flex justify-center items-center gap-2 w-full text-sm
